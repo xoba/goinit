@@ -18,5 +18,7 @@ wget -N https://raw.github.com/xoba/goinit/master/push.sh
 wget -N https://raw.github.com/xoba/goinit/master/sourcefiles.sh
 wget -N https://raw.github.com/xoba/goinit/master/x-ide.sh
 wget -N https://raw.github.com/xoba/goinit/master/clean.sh
+wget -N https://raw.github.com/xoba/goinit/master/format.sh
+wget -N https://raw.github.com/xoba/goinit/master/replace.sh
 chmod u+x *.sh
 
