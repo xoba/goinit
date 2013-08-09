@@ -1,8 +1,10 @@
 #!/bin/bash
 source config.txt
+
 mkdir -p go
 mkdir -p go/src
 mkdir -p go/src/$BUILD
+
 wget -N https://raw.github.com/xoba/goinit/master/uniq.sh
 wget -N https://raw.github.com/xoba/goinit/master/aws-ide.sh
 wget -N https://raw.github.com/xoba/goinit/master/genbuild.sh
@@ -26,3 +28,5 @@ echo "bin" >> go/.gitignore
 
 echo "build.go" >> go/src/$BUILD/.gitignore
 ./uniq.sh go/src/$BUILD/.gitignore
+
+rm uniq.sh
