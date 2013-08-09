@@ -1,9 +1,12 @@
 #!/bin/bash
+source config.txt
 mkdir -p go
 mkdir -p go/src
+mkdir -p go/src/$BUILD
 echo ".git" >> go/.gitignore
 echo "pkg" >> go/.gitignore
 echo "bin" >> go/.gitignore
+echo "build.go" >> go/src/$BUILD/.gitignore
 wget -N https://raw.github.com/xoba/goinit/master/aws-ide.sh
 wget -N https://raw.github.com/xoba/goinit/master/genbuild.sh
 wget -N https://raw.github.com/xoba/goinit/master/gofiles.sh
