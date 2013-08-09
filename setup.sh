@@ -12,7 +12,6 @@ wget -N https://raw.github.com/xoba/goinit/master/ide.sh
 wget -N https://raw.github.com/xoba/goinit/master/install.sh
 wget -N https://raw.github.com/xoba/goinit/master/pull.sh
 wget -N https://raw.github.com/xoba/goinit/master/push.sh
-wget -N https://raw.github.com/xoba/goinit/master/setup.sh
 wget -N https://raw.github.com/xoba/goinit/master/sourcefiles.sh
 wget -N https://raw.github.com/xoba/goinit/master/x-ide.sh
 wget -N https://raw.github.com/xoba/goinit/master/clean.sh
