@@ -1,0 +1,3 @@
+MAIN=blah/tool
+BUILD=blah/build
+URL=git@github.com:xoba/blah.git

@@ -1,6 +1,9 @@
 #!/bin/bash
 mkdir -p go
 mkdir -p go/src
+echo ".git" >> go/.gitignore
+echo "pkg" >> go/.gitignore
+echo "bin" >> go/.gitignore
 wget -N https://raw.github.com/xoba/goinit/master/aws-ide.sh
 wget -N https://raw.github.com/xoba/goinit/master/genbuild.sh
 wget -N https://raw.github.com/xoba/goinit/master/gofiles.sh
