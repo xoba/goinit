@@ -8,8 +8,8 @@ export VERSION=`cat version.txt`
 export STATUS=`git status`
 export ID=`uuidgen`
 
-mkdir -p ./go/src/ps/build
-export F="./go/src/ps/build/build.go"
+mkdir -p ./go/src/$BUILD
+export F="./go/src/$BUILD/build.go"
 
 echo "package build" > $F
 echo "import (" >> $F
