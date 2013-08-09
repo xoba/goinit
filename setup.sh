@@ -3,10 +3,7 @@ source config.txt
 mkdir -p go
 mkdir -p go/src
 mkdir -p go/src/$BUILD
-echo ".git" >> go/.gitignore
-echo "pkg" >> go/.gitignore
-echo "bin" >> go/.gitignore
-echo "build.go" >> go/src/$BUILD/.gitignore
+wget -N https://raw.github.com/xoba/goinit/master/uniq.sh
 wget -N https://raw.github.com/xoba/goinit/master/aws-ide.sh
 wget -N https://raw.github.com/xoba/goinit/master/genbuild.sh
 wget -N https://raw.github.com/xoba/goinit/master/gofiles.sh
@@ -22,3 +19,10 @@ wget -N https://raw.github.com/xoba/goinit/master/format.sh
 wget -N https://raw.github.com/xoba/goinit/master/replace.sh
 chmod u+x *.sh
 
+echo ".git" >> go/.gitignore
+echo "pkg" >> go/.gitignore
+echo "bin" >> go/.gitignore
+./uniq.sh go/.gitignore
+
+echo "build.go" >> go/src/$BUILD/.gitignore
+./uniq.sh go/src/$BUILD/.gitignore

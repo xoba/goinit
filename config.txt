@@ -1,3 +1,3 @@
-MAIN=blah/tool
 BUILD=blah/build
+MAIN=blah/tool
 URL=git@github.com:xoba/blah.git
