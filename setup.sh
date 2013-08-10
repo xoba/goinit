@@ -22,6 +22,7 @@ wget -N https://raw.github.com/xoba/goinit/master/replace.sh
 chmod u+x *.sh
 
 echo ".git" >> go/.gitignore
+echo ".hg" >> go/.gitignore
 echo "pkg" >> go/.gitignore
 echo "bin" >> go/.gitignore
 ./uniq.sh go/.gitignore
