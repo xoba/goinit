@@ -29,7 +29,6 @@ cd ~/go/src
 time ./all.bash
 
 go get code.google.com/p/go.talks/present
-#go get code.google.com/p/go.tools/cmd/...
 go get code.google.com/p/go.tools/cmd/cover
 go get code.google.com/p/go.tools/cmd/godoc
 go get code.google.com/p/go.tools/cmd/goimports
