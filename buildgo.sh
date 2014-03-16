@@ -21,6 +21,12 @@ EOF
 
 cd ~/go/src
 time ./make.bash
+
+cat >> ~/.bashrc <<EOF
+export GOROOT=~/go
+export PATH=$PATH:$GOROOT/bin
+EOF
+
 go get code.google.com/p/go.codereview/cmd/hgapplydiff
 
 hg clpatch 34580043 # SO_REUSEPORT
