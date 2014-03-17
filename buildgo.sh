@@ -16,7 +16,7 @@ cat >> go/.hg/hgrc <<EOF
 [extensions]
 codereview = ~/go/lib/codereview/codereview.py
 [ui]
-username = Mike Andrews <mra@xoba.com>
+username = Joe Schmo <joe@example.org>
 EOF
 
 cd ~/go/src
