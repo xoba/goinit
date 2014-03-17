@@ -30,6 +30,7 @@ EOF
 go get code.google.com/p/go.codereview/cmd/hgapplydiff
 
 hg clpatch 34580043 # SO_REUSEPORT
+hg clpatch 76580044 # don't delete /dev/null
 
 cd ~/go/src
 time ./all.bash
@@ -59,6 +60,8 @@ cat > $GOROOT/misc/emacs/.emacs <<EOF
 EOF
 
 cp $GOROOT/misc/emacs/.emacs ~/
+
+rm -rf $GOPATH
 
 cd ~/
 tar cf go.tar go
