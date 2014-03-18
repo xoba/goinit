@@ -55,7 +55,7 @@ go get code.google.com/p/rog-go/exp/cmd/godef
 go get code.google.com/p/go.codereview/cmd/hgapplydiff
 
 # remove a file with syntax errors
-rm -f $GOPATH/src/pkg/code.google.com/p/rog-go/exp/abc/audio/output.go
+rm -f $GOPATH/src/code.google.com/p/rog-go/exp/abc/audio/output.go
 
 cp $GOPATH/src/github.com/dougm/goflymake/*.el $GOROOT/misc/emacs/
 cp $GOPATH/bin/* $GOROOT/bin/
