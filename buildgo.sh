@@ -47,6 +47,8 @@ go get github.com/dougm/goflymake
 go get code.google.com/p/rog-go/exp/cmd/godef
 go get code.google.com/p/go.codereview/cmd/hgapplydiff
 
+rm -rf $GOPATH/src/pkg/code.google.com/p/rog-go/exp/abc/audio/output.go # ...syntax errors
+
 cp $GOPATH/src/github.com/dougm/goflymake/*.el $GOROOT/misc/emacs/
 cp $GOPATH/bin/* $GOROOT/bin/
 mkdir $GOROOT/misc/present
