@@ -20,11 +20,16 @@ username = Joe Schmo <joe@example.org>
 EOF
 
 cd ~/go/src
+
+# make golang, first pass for hgapplydiff
 time ./make.bash
 
 cat >> ~/.bashrc <<EOF
 export GOROOT=~/go
 export PATH=$PATH:$GOROOT/bin
+if [ -f $GOROOT/misc/bash/go ]; then
+    . $GOROOT/misc/bash/go
+fi
 EOF
 
 go get code.google.com/p/go.codereview/cmd/hgapplydiff
@@ -33,6 +38,8 @@ hg clpatch 34580043 # SO_REUSEPORT
 hg clpatch 76580044 # don't delete /dev/null
 
 cd ~/go/src
+
+# make golang, second pass for tests
 time ./all.bash
 
 go get code.google.com/p/go.talks/present
@@ -47,7 +54,8 @@ go get github.com/dougm/goflymake
 go get code.google.com/p/rog-go/exp/cmd/godef
 go get code.google.com/p/go.codereview/cmd/hgapplydiff
 
-rm -f $GOPATH/src/pkg/code.google.com/p/rog-go/exp/abc/audio/output.go # ...syntax errors
+# remove a file with syntax errors
+rm -f $GOPATH/src/pkg/code.google.com/p/rog-go/exp/abc/audio/output.go
 
 cp $GOPATH/src/github.com/dougm/goflymake/*.el $GOROOT/misc/emacs/
 cp $GOPATH/bin/* $GOROOT/bin/
