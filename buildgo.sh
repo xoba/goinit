@@ -1,10 +1,12 @@
 #!/bin/bash
 
-# meant to be run as root
+#
+# installs go into current directory, also creates go.tar.gz
+#
 
 cd ~/
 
-aptitude update && aptitude install -y gcc libc6-dev mercurial libtool emacs git
+sudo aptitude update && sudo aptitude install -y gcc libc6-dev mercurial libtool emacs git
 
 export GOROOT=~/go
 export GOPATH=`mktemp -d`
