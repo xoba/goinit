@@ -37,7 +37,7 @@ EOF
 go get code.google.com/p/go.codereview/cmd/hgapplydiff
 
 hg clpatch 34580043 # SO_REUSEPORT
-hg clpatch 76580044 # don't delete /dev/null
+hg clpatch 76810045 # don't delete /dev/null
 
 cd ~/go/src
 
