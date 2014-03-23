@@ -6,12 +6,12 @@
 
 cd ~/
 
-cat > ~/.hgrc <<EOF
+sudo aptitude update && sudo aptitude install -y gcc libc6-dev mercurial libtool emacs git make
+
+cat >> ~/.hgrc <<EOF
 [web]
 cacerts = /etc/ssl/certs/ca-certificates.crt
 EOF
-
-sudo aptitude update && sudo aptitude install -y gcc libc6-dev mercurial libtool emacs git
 
 export GOROOT=~/go
 export GOPATH=`mktemp -d`
