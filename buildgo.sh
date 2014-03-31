@@ -31,14 +31,6 @@ cd ~/go/src
 # make golang, first pass for hgapplydiff
 time ./make.bash
 
-cat >> ~/.bashrc <<EOF
-export GOROOT=~/go
-export PATH=$PATH:$GOROOT/bin
-if [ -f $GOROOT/misc/bash/go ]; then
-    . $GOROOT/misc/bash/go
-fi
-EOF
-
 go get code.google.com/p/go.codereview/cmd/hgapplydiff
 
 hg clpatch 34580043 # SO_REUSEPORT
@@ -74,8 +66,6 @@ cat > $GOROOT/misc/emacs/.emacs <<EOF
 (add-hook 'before-save-hook #'gofmt-before-save)
 (require 'go-flymake)
 EOF
-
-cp $GOROOT/misc/emacs/.emacs ~/
 
 rm -rf $GOPATH
 
