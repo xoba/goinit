@@ -34,7 +34,6 @@ time ./make.bash
 go get code.google.com/p/go.codereview/cmd/hgapplydiff
 
 hg clpatch 34580043 # SO_REUSEPORT
-hg clpatch 89030043 # don't delete /dev/null redux
 
 cd ~/go/src
 
