@@ -71,4 +71,4 @@ rm -rf $GOPATH
 
 cd ~/
 tar cf go.tar go
-gzip go.tar
+gzip -f go.tar
