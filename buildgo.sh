@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #
-# installs go into current directory, also creates go.tar.gz
+# installs go into home directory, also creates go.tar.gz
 #
 
 cd ~/
@@ -40,6 +40,7 @@ cd ~/go/src
 # make golang, second pass for tests
 time ./all.bash
 
+go get code.google.com/p/go.tools/cmd/goimports
 go get code.google.com/p/go.talks/present
 go get code.google.com/p/go.tools/cmd/cover
 go get code.google.com/p/go.tools/cmd/godoc
@@ -61,6 +62,11 @@ mkdir $GOROOT/misc/present
 mv $GOPATH/src/code.google.com $GOROOT/src/pkg
 
 cat > $GOROOT/misc/emacs/.emacs <<EOF
+(set-foreground-color "black")
+(set-background-color "white")
+(add-to-list 'default-frame-alist '(foreground-color . "black"))
+(add-to-list 'default-frame-alist '(background-color . "white"))
+(setq gofmt-command "goimports")
 (add-to-list 'load-path "~/go/misc/emacs/" t)
 (require 'go-mode-load)
 (add-hook 'before-save-hook #'gofmt-before-save)
