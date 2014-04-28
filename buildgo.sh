@@ -58,6 +58,7 @@ go get github.com/golang/lint/golint
 rm -f $GOPATH/src/code.google.com/p/rog-go/exp/abc/audio/output.go
 
 cp $GOPATH/src/github.com/dougm/goflymake/*.el $GOROOT/misc/emacs/
+cp $GOPATH/src/github.com/golang/lint/misc/emacs/*.el $GOROOT/misc/emacs/
 cp $GOPATH/bin/* $GOROOT/bin/
 mkdir $GOROOT/misc/present
 mv $GOPATH/src/code.google.com $GOROOT/src/pkg
@@ -72,6 +73,7 @@ cat > $GOROOT/misc/emacs/.emacs <<EOF
 (require 'go-mode-load)
 (add-hook 'before-save-hook #'gofmt-before-save)
 (require 'go-flymake)
+(require 'golint)
 EOF
 
 rm -rf $GOPATH
