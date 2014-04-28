@@ -65,10 +65,10 @@ mv $GOPATH/src/code.google.com $GOROOT/src/pkg
 
 cat > $GOROOT/misc/emacs/.emacs <<EOF
 (set-cursor-color "white") 
-(set-foreground-color "black")
-(set-background-color "white")
-(add-to-list 'default-frame-alist '(foreground-color . "black"))
-(add-to-list 'default-frame-alist '(background-color . "white"))
+(set-foreground-color "white")
+(set-background-color "black")
+(add-to-list 'default-frame-alist '(foreground-color . "white"))
+(add-to-list 'default-frame-alist '(background-color . "black"))
 (setq gofmt-command "goimports")
 (add-to-list 'load-path "~/go/misc/emacs/" t)
 (require 'go-mode-load)
