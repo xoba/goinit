@@ -52,6 +52,7 @@ go get code.google.com/p/go.tools/cmd/vet
 go get github.com/dougm/goflymake
 go get code.google.com/p/rog-go/exp/cmd/godef
 go get code.google.com/p/go.codereview/cmd/hgapplydiff
+go get github.com/golang/lint/golint
 
 # remove a file with syntax errors
 rm -f $GOPATH/src/code.google.com/p/rog-go/exp/abc/audio/output.go
