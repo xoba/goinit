@@ -64,6 +64,7 @@ mkdir $GOROOT/misc/present
 mv $GOPATH/src/code.google.com $GOROOT/src/pkg
 
 cat > $GOROOT/misc/emacs/.emacs <<EOF
+(set-cursor-color "white") 
 (set-foreground-color "black")
 (set-background-color "white")
 (add-to-list 'default-frame-alist '(foreground-color . "black"))
