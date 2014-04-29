@@ -6,7 +6,7 @@
 
 cd ~/
 
-sudo aptitude update && sudo aptitude install -y gcc libc6-dev mercurial libtool emacs git make
+sudo aptitude install -y gcc libc6-dev mercurial libtool emacs git make
 
 cat >> ~/.hgrc <<EOF
 [web]
