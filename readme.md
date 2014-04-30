@@ -4,4 +4,8 @@ for initializing a go project with filesystem, scripts, etc:
 
 for building golang from scratch:
 
-    source <(curl https://raw.github.com/xoba/goinit/master/buildgo.sh) | tee log.txt
+    source <(curl https://raw.githubusercontent.com/xoba/goinit/master/buildgo.sh) | tee log.txt
+
+setting up bashrc, emacs, etc:
+
+    source <(curl https://raw.githubusercontent.com/xoba/goinit/master/setupgo.sh)
