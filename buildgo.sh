@@ -56,8 +56,11 @@ cat > $GOROOT/misc/emacs/.emacs <<EOF
 EOF
 
 export GOOS=darwin
+export GOARCH=amd64
 ./make.bash --no-clean
+
 export GOOS=windows
+export GOARCH=amd64
 ./make.bash --no-clean
 
 rm -rf $GOPATH
