@@ -1,12 +1,17 @@
-#!/bin/bash -e
+#!/bin/bash
 
 #
-# installs go into home directory, also creates go.tar.gz
+# installs minor fork of go into home directory, also creates go.tar.gz
 #
 
 cd ~/
 
 sudo aptitude update && sudo aptitude install -y gcc libc6-dev mercurial git libtool make
+
+cat >> ~/.hgrc <<EOF
+[web]
+cacerts = /etc/ssl/certs/ca-certificates.crt
+EOF
 
 export GOROOT=~/go
 export GOPATH=`mktemp -d`
@@ -14,8 +19,25 @@ export PATH=$GOROOT/bin:$GOPATH/bin:$PATH
 
 hg clone https://code.google.com/p/go
 
+cat >> go/.hg/hgrc <<EOF
+[extensions]
+codereview = ~/go/lib/codereview/codereview.py
+[ui]
+username = Joe Schmo <joe@example.org>
+EOF
+
 cd ~/go/src
 
+# make golang, first pass for hgapplydiff
+./make.bash
+
+go get code.google.com/p/go.codereview/cmd/hgapplydiff
+
+hg clpatch 34580043 # SO_REUSEPORT
+
+cd ~/go/src
+
+# make golang, second pass for tests
 ./all.bash
 
 go get code.google.com/p/go.tools/cmd/goimports
@@ -54,11 +76,6 @@ cat > $GOROOT/misc/emacs/.emacs <<EOF
 (require 'go-flymake)
 (require 'golint)
 EOF
-
-export GOOS=darwin
-./make.bash --no-clean
-export GOOS=windows
-./make.bash --no-clean
 
 rm -rf $GOPATH
 

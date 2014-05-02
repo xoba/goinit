@@ -2,7 +2,7 @@
 
 # simplest, vanilla golang build
 
-sudo aptitude update && sudo aptitude install -y gcc libc6-dev mercurial libtool emacs git make
+sudo aptitude update && sudo aptitude install -y gcc libc6-dev mercurial git libtool make
 
 time hg clone https://code.google.com/p/go
 cd go/src
