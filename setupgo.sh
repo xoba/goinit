@@ -4,6 +4,8 @@
 # sets up go, assumed to be in ~/go
 #
 
+sudo aptitude update && sudo aptitude install -y emacs
+
 cat >> ~/.bashrc <<EOF
 export GOROOT=~/go
 export PATH=$PATH:~/go/bin
