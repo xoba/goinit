@@ -14,7 +14,7 @@ hg clone https://code.google.com/p/go
 
 cd ~/go/src
 
-./all.bash
+./make.bash
 
 go get code.google.com/p/go.tools/cmd/goimports
 go get code.google.com/p/go.talks/present
