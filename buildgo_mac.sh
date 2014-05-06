@@ -63,6 +63,11 @@ export GOARCH=arm
 ./make.bash --no-clean
 rm -rf ~/go/bin/linux_arm/
 
+export GOOS=windows
+export GOARCH=amd64
+./make.bash --no-clean
+rm -rf ~/go/bin/windows_amd64/
+
 rm -rf $GOPATH
 
 cd ~/
