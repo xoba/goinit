@@ -11,7 +11,7 @@ sudo aptitude update && sudo aptitude install -y gcc libc6-dev mercurial git lib
 export GOROOT=~/go
 export GOPATH=`mktemp -d`
 export PATH=$GOROOT/bin:$GOPATH/bin:$PATH
-
+export GO_DISTFLAGS="-s"
 hg clone https://code.google.com/p/go
 
 cd ~/go/src
