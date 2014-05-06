@@ -53,6 +53,16 @@ cat > $GOROOT/misc/emacs/.emacs <<EOF
 (require 'golint)
 EOF
 
+export GOOS=linux
+export GOARCH=amd64
+./make.bash --no-clean
+rm -rf ~/go/bin/linux_amd64/
+
+export GOOS=linux
+export GOARCH=arm
+./make.bash --no-clean
+rm -rf ~/go/bin/linux_arm/
+
 rm -rf $GOPATH
 
 cd ~/
