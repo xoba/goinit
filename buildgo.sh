@@ -71,6 +71,9 @@ export GOARCH=amd64
 ./make.bash --no-clean
 rm -rf ~/go/bin/windows_amd64/
 
+unset GOOS
+unset GOARCH
+
 rm -rf $GOPATH
 
 cd ~/
