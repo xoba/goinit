@@ -6,7 +6,7 @@
 
 cd ~/
 
-sudo aptitude update && sudo aptitude install -y gcc libc6-dev mercurial git libtool make
+sudo aptitude update && sudo aptitude install -y gcc libc6-dev mercurial git libtool make pkg-config
 
 export GOROOT=~/go
 export GOPATH=`mktemp -d`
