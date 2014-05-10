@@ -73,6 +73,8 @@ rm -rf ~/go/bin/windows_amd64/
 
 unset GOOS
 unset GOARCH
+unset GOROOT
+unset GOPATH
 
 rm -rf $GOPATH
 
