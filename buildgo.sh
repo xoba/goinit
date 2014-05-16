@@ -43,6 +43,7 @@ mkdir $GOROOT/misc/present
 mv $GOPATH/src/code.google.com $GOROOT/src/pkg
 
 cat > $GOROOT/misc/emacs/.emacs <<EOF
+(add-to-list 'auto-mode-alist '("\\.nex\\'" . c-mode))
 (set-cursor-color "white") 
 (set-foreground-color "white")
 (set-background-color "black")
