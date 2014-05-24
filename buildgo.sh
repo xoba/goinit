@@ -1,26 +1,32 @@
 #!/bin/bash -e
 
 #
-# installs go into home directory, also creates go.tar.gz
+# creates go.tar.gz, a nice customized golang.org distribution for linux
 #
 
-cd ~/
+function tmp() {
+    echo `mktemp -d /tmp/go_XXXXXXXXXXXX`
+}
+
+export TMP=$(tmp)
+echo "working in $TMP"
+cd $TMP
 
 sudo aptitude update && sudo aptitude install -y gcc libc6-dev mercurial git libtool make pkg-config
 
-export GOROOT=~/go
-export GOPATH=`mktemp -d`
+export GOROOT=$TMP/go
+export GOPATH=$(tmp)
 export PATH=$GOROOT/bin:$GOPATH/bin:$PATH
 # export GO_DISTFLAGS="-s"
 
 hg clone https://code.google.com/p/go
 
-cd ~/go/src
+cd $TMP/go/src
 
-./all.bash
+./all.bash 2>&1 | tee $TMP/log.txt
 
 go get code.google.com/p/go.tools/cmd/goimports
-go get code.google.com/p/go.talks/present
+go get code.google.com/p/go.tools/cmd/present
 go get code.google.com/p/go.tools/cmd/cover
 go get code.google.com/p/go.tools/cmd/godoc
 go get code.google.com/p/go.tools/cmd/goimports
@@ -39,7 +45,6 @@ rm -f $GOPATH/src/code.google.com/p/rog-go/exp/abc/audio/output.go
 cp $GOPATH/src/github.com/dougm/goflymake/*.el $GOROOT/misc/emacs/
 cp $GOPATH/src/github.com/golang/lint/misc/emacs/*.el $GOROOT/misc/emacs/
 cp $GOPATH/bin/* $GOROOT/bin/
-mkdir $GOROOT/misc/present
 mv $GOPATH/src/code.google.com $GOROOT/src/pkg
 
 cat > $GOROOT/misc/emacs/.emacs <<EOF
@@ -60,17 +65,17 @@ EOF
 export GOOS=linux
 export GOARCH=arm
 ./make.bash --no-clean
-rm -rf ~/go/bin/linux_arm/
+rm -rf $TMP/go/bin/linux_arm/
 
 export GOOS=darwin
 export GOARCH=amd64
 ./make.bash --no-clean
-rm -rf ~/go/bin/darwin_amd64/
+rm -rf $TMP/go/bin/darwin_amd64/
 
 export GOOS=windows
 export GOARCH=amd64
 ./make.bash --no-clean
-rm -rf ~/go/bin/windows_amd64/
+rm -rf $TMP/go/bin/windows_amd64/
 
 unset GOOS
 unset GOARCH
@@ -79,6 +84,18 @@ unset GOPATH
 
 rm -rf $GOPATH
 
-cd ~/
-tar cf go.tar go
-gzip -f go.tar
+cd $TMP
+echo "results in $TMP"
+
+if grep -Fxq "ALL TESTS PASSED" log.txt
+then
+    echo "all tests passed"
+    tar cf go.tar go
+    gzip -f go.tar
+    rm -rf go
+    exit 0
+else
+    echo "all tests didn't pass"
+    exit 1
+fi
+
