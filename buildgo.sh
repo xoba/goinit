@@ -64,17 +64,17 @@ EOF
 
 export GOOS=linux
 export GOARCH=arm
-./make.bash --no-clean
+./make.bash --no-clean 2>&1 | tee -a $TMP/log.txt
 rm -rf $TMP/go/bin/linux_arm/
 
 export GOOS=darwin
 export GOARCH=amd64
-./make.bash --no-clean
+./make.bash --no-clean 2>&1 | tee -a $TMP/log.txt
 rm -rf $TMP/go/bin/darwin_amd64/
 
 export GOOS=windows
 export GOARCH=amd64
-./make.bash --no-clean
+./make.bash --no-clean 2>&1 | tee -a $TMP/log.txt
 rm -rf $TMP/go/bin/windows_amd64/
 
 unset GOOS
@@ -95,7 +95,7 @@ then
     rm -rf go
     exit 0
 else
-    echo "all tests didn't pass"
+    echo "tests failed"
     exit 1
 fi
 
