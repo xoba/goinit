@@ -1,0 +1,14 @@
+libpcre seems troublesome:
+
+...
+binary-tree-freelist
+fannkuch
+fannkuch-parallel
+Package libpcre was not found in the pkg-config search path.
+Perhaps you should add the directory containing `libpcre.pc'
+to the PKG_CONFIG_PATH environment variable
+No package 'libpcre' found
+regex-dna
+regex-dna-parallel
+spectral-norm
+...
