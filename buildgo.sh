@@ -8,7 +8,10 @@ function tmp() {
     echo `mktemp -d /tmp/go_XXXXXXXXXXXX`
 }
 
-export TMP=$(tmp)
+if [ -z "$TMP" ]; then
+    export TMP=$(tmp)
+fi
+
 echo "working in $TMP"
 cd $TMP
 
