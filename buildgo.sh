@@ -4,6 +4,8 @@
 # creates go.tar.gz, a nice customized golang.org distribution for linux
 #
 
+export GOROOT_FINAL=~/go
+
 function tmp() {
     echo `mktemp -d /tmp/go_XXXXXXXXXXXX`
 }
