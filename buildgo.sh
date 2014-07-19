@@ -44,6 +44,11 @@ go get code.google.com/p/rog-go/exp/cmd/godef
 go get code.google.com/p/go.codereview/cmd/hgapplydiff
 go get github.com/golang/lint/golint
 
+mkdir -p ../misc/emacs
+wget https://raw.githubusercontent.com/dominikh/go-mode.el/master/go-mode.el
+mv go-mode.el ../misc/emacs
+# not sure how to autogenerate go-mode-load.el yet...
+
 # remove a file with syntax errors
 rm -f $GOPATH/src/code.google.com/p/rog-go/exp/abc/audio/output.go
 
@@ -53,7 +58,6 @@ cp $GOPATH/bin/* $GOROOT/bin/
 mv $GOPATH/src/code.google.com $GOROOT/src/pkg
 
 cat > $GOROOT/misc/emacs/.emacs <<EOF
-(add-to-list 'auto-mode-alist '("\\.nex\\'" . c-mode))
 (set-cursor-color "white") 
 (set-foreground-color "white")
 (set-background-color "black")
