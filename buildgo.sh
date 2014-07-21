@@ -17,7 +17,7 @@ fi
 echo "working in $TMP"
 cd $TMP
 
-sudo aptitude update && sudo aptitude install -y gcc libc6-dev mercurial git libtool make pkg-config
+sudo aptitude update && sudo aptitude install -y gcc libc6-dev mercurial git libtool make pkg-config emacs
 
 export GOROOT=$TMP/go
 export GOPATH=$(tmp)
@@ -46,8 +46,9 @@ go get github.com/golang/lint/golint
 
 mkdir -p ../misc/emacs
 wget https://raw.githubusercontent.com/dominikh/go-mode.el/master/go-mode.el
+emacs -batch --eval "(let ((generated-autoload-file \"$(pwd)/go-mode-load.el\")) (update-directory-autoloads \".\"))"
 mv go-mode.el ../misc/emacs
-# not sure how to autogenerate go-mode-load.el yet...
+mv go-mode-load.el ../misc/emacs
 
 # remove a file with syntax errors
 rm -f $GOPATH/src/code.google.com/p/rog-go/exp/abc/audio/output.go
