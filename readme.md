@@ -1,11 +1,11 @@
 for initializing a go project with filesystem, scripts, etc:
 
-    curl https://raw.github.com/xoba/goinit/master/setup.sh | sh
+    curl https://raw.github.com/xoba/goinit/master/setup.sh | bash
 
 for building golang from scratch:
 
-    time source <(curl https://raw.githubusercontent.com/xoba/goinit/master/buildgo.sh)
+    curl https://raw.githubusercontent.com/xoba/goinit/master/buildgo.sh | bash
 
 setting up bashrc, emacs, etc:
 
-    source <(curl https://raw.githubusercontent.com/xoba/goinit/master/setupgo.sh)
+    curl https://raw.githubusercontent.com/xoba/goinit/master/setupgo.sh | bash

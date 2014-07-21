@@ -45,10 +45,13 @@ go get code.google.com/p/go.codereview/cmd/hgapplydiff
 go get github.com/golang/lint/golint
 
 mkdir -p ../misc/emacs
-wget https://raw.githubusercontent.com/dominikh/go-mode.el/master/go-mode.el
+git clone https://github.com/dominikh/go-mode.el.git
+cd go-mode.el
 emacs -batch --eval "(let ((generated-autoload-file \"$(pwd)/go-mode-load.el\")) (update-directory-autoloads \".\"))"
-mv go-mode.el ../misc/emacs
-mv go-mode-load.el ../misc/emacs
+mv go-mode.el ../../misc/emacs
+mv go-mode-load.el ../../misc/emacs
+cd ..
+rm -rf go-mode.el
 
 # remove a file with syntax errors
 rm -f $GOPATH/src/code.google.com/p/rog-go/exp/abc/audio/output.go
