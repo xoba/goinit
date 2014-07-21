@@ -103,6 +103,7 @@ then
     tar cf go.tar go
     gzip -f go.tar
     rm -rf go
+    echo "produced $TMP/go.tar.gz"
     exit 0
 else
     echo "tests failed"
