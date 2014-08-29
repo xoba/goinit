@@ -17,7 +17,8 @@ fi
 echo "working in $TMP"
 cd $TMP
 
-sudo aptitude update && sudo aptitude install -y gcc libc6-dev mercurial git libtool make pkg-config emacs
+# if you need to setup an ubuntu box, uncomment the following:
+# sudo aptitude update && sudo aptitude install -y gcc libc6-dev mercurial git libtool make pkg-config emacs
 
 export GOROOT=$TMP/go
 export GOPATH=$(tmp)
@@ -27,6 +28,7 @@ export PATH=$GOROOT/bin:$GOPATH/bin:$PATH
 hg clone https://code.google.com/p/go
 
 cd $TMP/go/src
+hg update 173175ba9eb7
 
 ./all.bash 2>&1 | tee $TMP/log.txt
 
@@ -106,10 +108,10 @@ then
     tar cf go.tar go
     gzip -f go.tar
     rm -rf go
-    echo "produced $TMP/go.tar.gz"
+    echo $TMP/go.tar.gz
     exit 0
 else
-    echo "tests failed"
+    echo "tests failed, produced nothing"
     exit 1
 fi
 
