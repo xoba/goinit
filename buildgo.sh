@@ -28,7 +28,7 @@ export PATH=$GOROOT/bin:$GOPATH/bin:$PATH
 hg clone https://code.google.com/p/go
 
 cd $TMP/go/src
-hg update 0b83bb7bb7ec705538e89577c4f0da9ff37b4fbe
+hg update 0768bb1fd027c1d92e155d0c0387b4d794fbd63a
 
 ./all.bash 2>&1 | tee $TMP/log.txt
 
@@ -61,7 +61,7 @@ rm -f $GOPATH/src/code.google.com/p/rog-go/exp/abc/audio/output.go
 cp $GOPATH/src/github.com/dougm/goflymake/*.el $GOROOT/misc/emacs/
 cp $GOPATH/src/github.com/golang/lint/misc/emacs/*.el $GOROOT/misc/emacs/
 cp $GOPATH/bin/* $GOROOT/bin/
-mv $GOPATH/src/code.google.com $GOROOT/src/pkg
+mv $GOPATH/src/code.google.com $GOROOT/src
 
 cat > $GOROOT/misc/emacs/.emacs <<EOF
 (set-cursor-color "white") 
