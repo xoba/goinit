@@ -28,7 +28,7 @@ export PATH=$GOROOT/bin:$GOPATH/bin:$PATH
 hg clone https://code.google.com/p/go
 
 cd $TMP/go/src
-hg update 0768bb1fd027c1d92e155d0c0387b4d794fbd63a
+hg update 938ecc995cbca35db65ef45c0276720bc5349036
 
 ./all.bash 2>&1 | tee $TMP/log.txt
 
