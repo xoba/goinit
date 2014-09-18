@@ -28,7 +28,7 @@ export PATH=$GOROOT/bin:$GOPATH/bin:$PATH
 hg clone https://code.google.com/p/go
 
 cd $TMP/go/src
-hg update 0768bb1fd027c1d92e155d0c0387b4d794fbd63a
+hg update cbf74e78998fe564f7c8177543072eabd100c537
 
 ./all.bash 2>&1 | tee $TMP/log.txt
 
@@ -77,20 +77,20 @@ cat > $GOROOT/misc/emacs/.emacs <<EOF
 (require 'golint)
 EOF
 
-export GOOS=linux
-export GOARCH=arm
-./make.bash --no-clean 2>&1 | tee -a $TMP/log.txt
-rm -rf $TMP/go/bin/linux_arm/
-
 export GOOS=darwin
 export GOARCH=amd64
 ./make.bash --no-clean 2>&1 | tee -a $TMP/log.txt
 rm -rf $TMP/go/bin/darwin_amd64/
 
-export GOOS=windows
-export GOARCH=amd64
-./make.bash --no-clean 2>&1 | tee -a $TMP/log.txt
-rm -rf $TMP/go/bin/windows_amd64/
+#export GOOS=windows
+#export GOARCH=amd64
+#./make.bash --no-clean 2>&1 | tee -a $TMP/log.txt
+#rm -rf $TMP/go/bin/windows_amd64/
+
+#export GOOS=linux
+#export GOARCH=arm
+#./make.bash --no-clean 2>&1 | tee -a $TMP/log.txt
+#rm -rf $TMP/go/bin/linux_arm/
 
 unset GOOS
 unset GOARCH
