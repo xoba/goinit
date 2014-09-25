@@ -28,7 +28,7 @@ export PATH=$GOROOT/bin:$GOPATH/bin:$PATH
 hg clone https://code.google.com/p/go
 
 cd $TMP/go/src
-hg update cbf74e78998fe564f7c8177543072eabd100c537
+hg update a7b4f8b35fa7212e882f2695f410d0b59a7a7d80
 
 ./all.bash 2>&1 | tee $TMP/log.txt
 
@@ -82,10 +82,10 @@ export GOARCH=amd64
 ./make.bash --no-clean 2>&1 | tee -a $TMP/log.txt
 rm -rf $TMP/go/bin/darwin_amd64/
 
-#export GOOS=windows
-#export GOARCH=amd64
-#./make.bash --no-clean 2>&1 | tee -a $TMP/log.txt
-#rm -rf $TMP/go/bin/windows_amd64/
+export GOOS=windows
+export GOARCH=amd64
+./make.bash --no-clean 2>&1 | tee -a $TMP/log.txt
+rm -rf $TMP/go/bin/windows_amd64/
 
 #export GOOS=linux
 #export GOARCH=arm
