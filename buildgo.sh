@@ -67,6 +67,7 @@ cat > $GOROOT/misc/emacs/.emacs <<EOF
 (set-cursor-color "white") 
 (set-foreground-color "white")
 (set-background-color "black")
+(set-face-attribute 'default nil :height 80)
 (add-to-list 'default-frame-alist '(foreground-color . "white"))
 (add-to-list 'default-frame-alist '(background-color . "black"))
 (setq gofmt-command "goimports")
