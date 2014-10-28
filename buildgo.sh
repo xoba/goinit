@@ -18,7 +18,7 @@ echo "working in $TMP"
 cd $TMP
 
 # if you need to setup an ubuntu box, uncomment the following:
-# sudo aptitude update && sudo aptitude install -y gcc libc6-dev mercurial git libtool make pkg-config emacs
+# sudo aptitude update && sudo aptitude install -y libc6-i386 gcc libc6-dev mercurial git libtool make pkg-config emacs
 
 export GOROOT=$TMP/go
 export GOPATH=$(tmp)
@@ -28,7 +28,7 @@ export PATH=$GOROOT/bin:$GOPATH/bin:$PATH
 hg clone https://code.google.com/p/go
 
 cd $TMP/go/src
-hg update 8ff3b7315209
+hg update c3481212573b4f9ea5dcf1b43874ebcb546499a6
 
 ./all.bash 2>&1 | tee $TMP/log.txt
 
