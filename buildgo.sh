@@ -32,15 +32,15 @@ hg update 087c5e6f289ca6fee175c33b3c6afa4b10b02479
 
 ./all.bash 2>&1 | tee $TMP/log.txt
 
+go get golang.org/x/tools/cmd/cover
+go get golang.org/x/tools/cmd/godoc
+go get golang.org/x/tools/cmd/vet
 go get code.google.com/p/go.tools/cmd/goimports
 go get code.google.com/p/go.tools/cmd/present
-go get code.google.com/p/go.tools/cmd/cover
-go get code.google.com/p/go.tools/cmd/godoc
 go get code.google.com/p/go.tools/cmd/goimports
 go get code.google.com/p/go.tools/cmd/gotype
 go get code.google.com/p/go.tools/cmd/oracle
 go get code.google.com/p/go.tools/cmd/ssadump
-go get code.google.com/p/go.tools/cmd/vet
 go get github.com/dougm/goflymake
 go get code.google.com/p/rog-go/exp/cmd/godef
 go get code.google.com/p/go.codereview/cmd/hgapplydiff
@@ -61,7 +61,7 @@ rm -f $GOPATH/src/code.google.com/p/rog-go/exp/abc/audio/output.go
 cp $GOPATH/src/github.com/dougm/goflymake/*.el $GOROOT/misc/emacs/
 cp $GOPATH/src/github.com/golang/lint/misc/emacs/*.el $GOROOT/misc/emacs/
 cp $GOPATH/bin/* $GOROOT/bin/
-mv $GOPATH/src/code.google.com $GOROOT/src
+#mv $GOPATH/src/code.google.com $GOROOT/src
 
 cat > $GOROOT/misc/emacs/.emacs <<EOF
 (set-face-attribute 'default nil :height 120)
