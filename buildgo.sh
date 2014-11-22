@@ -28,7 +28,7 @@ export PATH=$GOROOT/bin:$GOPATH/bin:$PATH
 hg clone https://code.google.com/p/go
 
 cd $TMP/go/src
-hg update 087c5e6f289ca6fee175c33b3c6afa4b10b02479
+hg update d7d71f7d6f53e217837d46aedba49db8c8811705
 
 ./all.bash 2>&1 | tee $TMP/log.txt
 
@@ -45,6 +45,7 @@ go get github.com/dougm/goflymake
 go get code.google.com/p/rog-go/exp/cmd/godef
 go get code.google.com/p/go.codereview/cmd/hgapplydiff
 go get github.com/golang/lint/golint
+go get code.google.com/p/go.tools/cmd/gorename
 
 mkdir -p ../misc/emacs
 git clone https://github.com/dominikh/go-mode.el.git
