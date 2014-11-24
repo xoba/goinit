@@ -65,7 +65,7 @@ cp $GOPATH/bin/* $GOROOT/bin/
 #mv $GOPATH/src/code.google.com $GOROOT/src
 
 cat > $GOROOT/misc/emacs/.emacs <<EOF
-(set-face-attribute 'default nil :height 120)
+(set-face-attribute 'default nil :height 110)
 (set-cursor-color "white") 
 (set-foreground-color "white")
 (set-background-color "black")
