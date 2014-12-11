@@ -35,6 +35,7 @@ hg update 9ef10fde754f1c5f56cea56e104a871693e520e1
 go get golang.org/x/tools/cmd/cover
 go get golang.org/x/tools/cmd/godoc
 go get golang.org/x/tools/cmd/vet
+go get golang.org/x/tools/cmd/stringer
 go get code.google.com/p/go.tools/cmd/goimports
 go get code.google.com/p/go.tools/cmd/present
 go get code.google.com/p/go.tools/cmd/goimports
