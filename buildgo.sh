@@ -25,10 +25,9 @@ export GOPATH=$(tmp)
 export PATH=$GOROOT/bin:$GOPATH/bin:$PATH
 # export GO_DISTFLAGS="-s"
 
-hg clone https://code.google.com/p/go
-
+git clone git@github.com:golang/go.git
 cd $TMP/go/src
-hg update 9ef10fde754f1c5f56cea56e104a871693e520e1
+git checkout 64e6fe2d29c3f8ae1e3e38a09bfb92b0452ad51b
 
 ./all.bash 2>&1 | tee $TMP/log.txt
 
