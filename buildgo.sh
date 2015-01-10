@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 #
-# creates go.tar.gz, a nice customized golang.org distribution for linux
+# creates go.tar.gz, a nice customized golang.org distribution for linux with emacs support
 #
 
 export GOROOT_FINAL=~/go
@@ -27,7 +27,7 @@ export PATH=$GOROOT/bin:$GOPATH/bin:$PATH
 
 git clone git@github.com:golang/go.git
 cd $TMP/go/src
-git checkout 64e6fe2d29c3f8ae1e3e38a09bfb92b0452ad51b
+git checkout 4e03bbb1ada77fd9e8ba95d82dec6bfb3862db0d
 
 ./all.bash 2>&1 | tee $TMP/log.txt
 
@@ -42,10 +42,10 @@ go get code.google.com/p/go.tools/cmd/gotype
 go get code.google.com/p/go.tools/cmd/oracle
 go get code.google.com/p/go.tools/cmd/ssadump
 go get github.com/dougm/goflymake
-go get code.google.com/p/rog-go/exp/cmd/godef
+go get github.com/xoba/godef
 go get code.google.com/p/go.codereview/cmd/hgapplydiff
 go get github.com/golang/lint/golint
-go get code.google.com/p/go.tools/cmd/gorename
+#go get code.google.com/p/go.tools/cmd/gorename
 
 mkdir -p ../misc/emacs
 git clone https://github.com/dominikh/go-mode.el.git
