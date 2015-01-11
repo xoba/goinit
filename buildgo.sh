@@ -42,7 +42,7 @@ go get code.google.com/p/go.tools/cmd/gotype
 go get code.google.com/p/go.tools/cmd/oracle
 go get code.google.com/p/go.tools/cmd/ssadump
 go get github.com/dougm/goflymake
-go get github.com/xoba/godef
+go get code.google.com/p/rog-go/exp/cmd/godef
 go get code.google.com/p/go.codereview/cmd/hgapplydiff
 go get github.com/golang/lint/golint
 #go get code.google.com/p/go.tools/cmd/gorename
