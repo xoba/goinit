@@ -17,17 +17,22 @@ fi
 echo "working in $TMP"
 cd $TMP
 
-# if you need to setup an ubuntu box, uncomment the following:
-# sudo aptitude update && sudo aptitude install -y libc6-i386 gcc libc6-dev mercurial git libtool make pkg-config emacs
-
 export GOROOT=$TMP/go
 export GOPATH=$(tmp)
 export PATH=$GOROOT/bin:$GOPATH/bin:$PATH
-# export GO_DISTFLAGS="-s"
 
 git clone https://github.com/golang/go.git
+
+# build bootstrap go
+git clone go go1.4
+cd go1.4/src
+git checkout go1.4.1
+./make.bash
+cd ..
+export GOROOT_BOOTSTRAP=`pwd`
+
 cd $TMP/go/src
-git checkout 4e03bbb1ada77fd9e8ba95d82dec6bfb3862db0d
+git checkout e12b1ddc9908602c7307d27a40c5b11529db6200
 
 ./all.bash 2>&1 | tee $TMP/log.txt
 
@@ -45,7 +50,6 @@ go get github.com/dougm/goflymake
 go get code.google.com/p/rog-go/exp/cmd/godef
 go get code.google.com/p/go.codereview/cmd/hgapplydiff
 go get github.com/golang/lint/golint
-#go get code.google.com/p/go.tools/cmd/gorename
 
 mkdir -p ../misc/emacs
 git clone https://github.com/dominikh/go-mode.el.git
@@ -62,7 +66,6 @@ rm -f $GOPATH/src/code.google.com/p/rog-go/exp/abc/audio/output.go
 cp $GOPATH/src/github.com/dougm/goflymake/*.el $GOROOT/misc/emacs/
 cp $GOPATH/src/github.com/golang/lint/misc/emacs/*.el $GOROOT/misc/emacs/
 cp $GOPATH/bin/* $GOROOT/bin/
-#mv $GOPATH/src/code.google.com $GOROOT/src
 
 cat > $GOROOT/misc/emacs/.emacs <<EOF
 (set-face-attribute 'default nil :height 110)
@@ -88,11 +91,6 @@ export GOOS=windows
 export GOARCH=amd64
 ./make.bash --no-clean 2>&1 | tee -a $TMP/log.txt
 rm -rf $TMP/go/bin/windows_amd64/
-
-#export GOOS=linux
-#export GOARCH=arm
-#./make.bash --no-clean 2>&1 | tee -a $TMP/log.txt
-#rm -rf $TMP/go/bin/linux_arm/
 
 unset GOOS
 unset GOARCH
