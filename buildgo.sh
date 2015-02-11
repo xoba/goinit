@@ -32,7 +32,7 @@ cd ..
 export GOROOT_BOOTSTRAP=`pwd`
 
 cd $TMP/go/src
-git checkout 813e97b
+git checkout master
 
 ./all.bash 2>&1 | tee $TMP/log.txt
 

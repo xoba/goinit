@@ -1,3 +1,10 @@
+==> default: --- FAIL: TestTraceStress (0.31s)
+==> default: 	trace_test.go:203: failed to parse trace: g 7 is not runnable before start (offset 23147, time 5760794)
+==> default: FAIL
+==> default: FAIL	runtime/pprof	6.691s
+
+
+
 libpcre seems troublesome:
 
 ...
