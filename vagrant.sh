@@ -8,5 +8,5 @@ ntpd -gq
 /etc/init.d/ntp start
 TGZ=`/vagrant/buildgo.sh`
 if [ $? -eq 0 ]; then
-    cp $TGZ /vagrant/
+    cp /tmp/go.tar.gz /vagrant/
 fi

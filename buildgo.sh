@@ -45,7 +45,7 @@ go get code.google.com/p/go.tools/cmd/present
 go get code.google.com/p/go.tools/cmd/goimports
 go get code.google.com/p/go.tools/cmd/gotype
 go get code.google.com/p/go.tools/cmd/oracle
-go get code.google.com/p/go.tools/cmd/ssadump
+#go get code.google.com/p/go.tools/cmd/ssadump
 go get github.com/dougm/goflymake
 go get code.google.com/p/rog-go/exp/cmd/godef
 go get code.google.com/p/go.codereview/cmd/hgapplydiff
@@ -108,7 +108,7 @@ then
     tar cf go.tar go
     gzip -f go.tar
     rm -rf go
-    echo $TMP/go.tar.gz
+    mv go.tar.gz /tmp
     exit 0
 else
     echo "tests failed, produced nothing"
