@@ -8,14 +8,18 @@ function tmp() {
     echo `mktemp -d /tmp/go_XXXXXXXXXXXX`
 }
 
+export TMP=$(tmp)
+echo "working in $TMP"
+cd $TMP
+
 wget https://storage.googleapis.com/golang/go1.4.2.linux-amd64.tar.gz
 tar xf go1.4.2.linux-amd64.tar.gz
 
 cd go
 
 export GOROOT=`pwd`
-export GOPATH=$(tmp)
-export PATH=$PATH:$GOROOT/bin
+export GOPATH=$TMP
+export PATH=$GOROOT/bin:$PATH
 
 go get code.google.com/p/go.tools/cmd/goimports
 go get code.google.com/p/go.tools/cmd/gotype
@@ -57,5 +61,4 @@ cat > $GOROOT/misc/emacs/.emacs <<EOF
 (require 'golint)
 EOF
 
-rm -rf $GOPATH
-
+echo "go in $TMP"
