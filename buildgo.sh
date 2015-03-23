@@ -4,21 +4,10 @@
 # creates go.tar.gz, a nice customized golang.org distribution for linux with emacs support
 #
 
-export GOROOT_FINAL=~/go
+cd ~/
 
-function tmp() {
-    echo `mktemp -d /tmp/go_XXXXXXXXXXXX`
-}
-
-if [ -z "$TMP" ]; then
-    export TMP=$(tmp)
-fi
-
-echo "working in $TMP"
-cd $TMP
-
-export GOROOT=$TMP/go
-export GOPATH=$(tmp)
+export GOROOT=~/go
+export GOPATH=/tmp/gopath
 export PATH=$GOROOT/bin:$GOPATH/bin:$PATH
 
 git clone https://github.com/golang/go.git
@@ -31,10 +20,10 @@ git checkout go1.4.1
 cd ..
 export GOROOT_BOOTSTRAP=`pwd`
 
-cd $TMP/go/src
-git checkout 5324cf2d45387b534068cf651e2d18e5df25d0b9
+cd ~/go/src
+git checkout 14082fad9b851267520d5d04aa314719bda47e9e
 
-./all.bash 2>&1 | tee $TMP/log.txt
+./all.bash 2>&1 | tee ~/log.txt
 
 go get golang.org/x/tools/cmd/cover
 go get golang.org/x/tools/cmd/godoc
@@ -42,10 +31,8 @@ go get golang.org/x/tools/cmd/vet
 go get golang.org/x/tools/cmd/stringer
 go get code.google.com/p/go.tools/cmd/goimports
 go get code.google.com/p/go.tools/cmd/present
-go get code.google.com/p/go.tools/cmd/goimports
 go get code.google.com/p/go.tools/cmd/gotype
 go get code.google.com/p/go.tools/cmd/oracle
-#go get code.google.com/p/go.tools/cmd/ssadump
 go get github.com/dougm/goflymake
 go get code.google.com/p/rog-go/exp/cmd/godef
 go get code.google.com/p/go.codereview/cmd/hgapplydiff
@@ -82,16 +69,6 @@ cat > $GOROOT/misc/emacs/.emacs <<EOF
 (require 'golint)
 EOF
 
-export GOOS=darwin
-export GOARCH=amd64
-./make.bash --no-clean 2>&1 | tee -a $TMP/log.txt
-rm -rf $TMP/go/bin/darwin_amd64/
-
-export GOOS=windows
-export GOARCH=amd64
-./make.bash --no-clean 2>&1 | tee -a $TMP/log.txt
-rm -rf $TMP/go/bin/windows_amd64/
-
 unset GOOS
 unset GOARCH
 unset GOROOT
@@ -99,8 +76,7 @@ unset GOPATH
 
 rm -rf $GOPATH
 
-cd $TMP
-echo "results in $TMP"
+cd ~/
 
 if grep -Fxq "ALL TESTS PASSED" log.txt
 then
@@ -108,7 +84,6 @@ then
     tar cf go.tar go
     gzip -f go.tar
     rm -rf go
-    mv go.tar.gz /tmp
     exit 0
 else
     echo "tests failed, produced nothing"
