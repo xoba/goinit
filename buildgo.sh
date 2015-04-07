@@ -15,13 +15,13 @@ git clone https://github.com/golang/go.git
 # build bootstrap go
 git clone go go1.4
 cd go1.4/src
-git checkout go1.4.1
+git checkout go1.4.2
 ./make.bash
 cd ..
 export GOROOT_BOOTSTRAP=`pwd`
 
 cd ~/go/src
-git checkout 14082fad9b851267520d5d04aa314719bda47e9e
+git checkout d6b40698528c94f3d0d3e263d5713994cebfb3a6
 
 ./all.bash 2>&1 | tee ~/log.txt
 
@@ -30,9 +30,7 @@ go get golang.org/x/tools/cmd/godoc
 go get golang.org/x/tools/cmd/vet
 go get golang.org/x/tools/cmd/stringer
 go get code.google.com/p/go.tools/cmd/goimports
-go get code.google.com/p/go.tools/cmd/present
 go get code.google.com/p/go.tools/cmd/gotype
-go get code.google.com/p/go.tools/cmd/oracle
 go get github.com/dougm/goflymake
 go get code.google.com/p/rog-go/exp/cmd/godef
 go get code.google.com/p/go.codereview/cmd/hgapplydiff
