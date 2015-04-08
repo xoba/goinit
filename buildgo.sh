@@ -84,6 +84,7 @@ cd ~/
 if grep -Fxq "ALL TESTS PASSED" log.txt
 then
     echo "all tests passed"
+    cp log.txt go
     tar cf go.tar go
     gzip -f go.tar
     rm -rf go
