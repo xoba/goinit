@@ -54,12 +54,17 @@ func main() {
 
 func gen(bucket string) {
 
-	t := template.Must(template.New("nodes.gv").Parse(`go run ec2.go -commit {{.commit}} -s3gz s3://{{.bucket}}/go_{{.commit}}.tar.gz -s3log s3://{{.bucket}}/log_{{.commit}}.txt
+	t := template.Must(template.New("nodes.gv").Parse(`go run ec2.go -commit {{.commit}} -s3gz s3://{{.bucket}}/go_{{.commit}}.tar.gz -s3log s3://{{.bucket}}/log_{{.commit}}.txt # {{.date}} {{.comment}}
 `))
-	for _, c := range getLogs("go") {
+	for i, c := range getLogs("go") {
+		if i > 30 {
+			break
+		}
 		check(t.Execute(os.Stdout, map[string]interface{}{
-			"commit": c.Hash[:10],
-			"bucket": bucket,
+			"commit":  c.Hash[:10],
+			"bucket":  bucket,
+			"date":    c.CommitterTime,
+			"comment": c.Comment,
 		}))
 	}
 }
