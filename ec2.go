@@ -6,6 +6,7 @@ import (
 	"bufio"
 	"bytes"
 	"flag"
+	"fmt"
 	"os"
 	"os/exec"
 	"os/user"
@@ -28,11 +29,12 @@ func main() {
 	flag.BoolVar(&dryrun, "dryrun", false, "don't launch any machines")
 	flag.StringVar(&candidates, "gen", "", "generate candidate command lines with given bucket")
 	flag.Parse()
+	auth, err := LoadProfile(profile)
+	check(err)
 	if len(candidates) > 0 {
-		gen(candidates)
+		gen(profile, candidates)
 		return
 	}
-	auth := LoadProfile(profile)
 	const driver = "ec2-driver.sh"
 	f, err := os.Create(driver)
 	check(err)
@@ -52,15 +54,16 @@ func main() {
 	}
 }
 
-func gen(bucket string) {
+func gen(profile, bucket string) {
 
-	t := template.Must(template.New("nodes.gv").Parse(`go run ec2.go -commit {{.commit}} -s3gz s3://{{.bucket}}/go_{{.commit}}.tar.gz -s3log s3://{{.bucket}}/log_{{.commit}}.txt # {{.date}} {{.comment}}
+	t := template.Must(template.New("nodes.gv").Parse(`go run ec2.go -profile {{.profile}} -commit {{.commit}} -s3gz s3://{{.bucket}}/go_{{.commit}}.tar.gz -s3log s3://{{.bucket}}/log_{{.commit}}.txt # {{.date}} {{.comment}}
 `))
 	for i, c := range getLogs("go") {
 		if i > 30 {
 			break
 		}
 		check(t.Execute(os.Stdout, map[string]interface{}{
+			"profile": profile,
 			"commit":  c.Hash[:10],
 			"bucket":  bucket,
 			"date":    c.CommitterTime,
@@ -148,16 +151,20 @@ type AwsAuth struct {
 	SecretKey string
 }
 
-func LoadProfile(p string) *AwsAuth {
+func LoadProfile(p string) (*AwsAuth, error) {
 	out := &AwsAuth{}
 	clean := func(s string) string {
 		return strings.TrimSpace(strings.ToLower(s))
 	}
 	u, err := user.Current()
-	check(err)
+	if err != nil {
+		return nil, err
+	}
 	config := filepath.Join(u.HomeDir, ".aws/config")
 	f, err := os.Open(config)
-	check(err)
+	if err != nil {
+		return nil, err
+	}
 	defer f.Close()
 	var active bool
 	s := bufio.NewScanner(f)
@@ -181,8 +188,13 @@ func LoadProfile(p string) *AwsAuth {
 			}
 		}
 	}
-	check(s.Err())
-	return out
+	if err := s.Err(); err != nil {
+		return nil, err
+	}
+	if len(out.SecretKey) == 0 || len(out.AccessKey) == 0 {
+		return nil, fmt.Errorf("no profile %q found", p)
+	}
+	return out, nil
 }
 
 func check(e error) {
