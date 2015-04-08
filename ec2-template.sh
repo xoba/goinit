@@ -26,4 +26,5 @@ fi
 {{ if .s3log }}aws s3 cp log.txt {{.s3log}}
 
 # wrap-up:
-{{ if .terminate}}aws ec2 terminate-instances --instance-ids `curl http://169.254.169.254/latest/meta-data/instance-id`{{end}}
+{{ if .terminate}}aws ec2 terminate-instances --instance-ids `curl http://169.254.169.254/latest/meta-data/instance-id`
+{{end}}
