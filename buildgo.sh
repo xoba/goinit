@@ -1,6 +1,8 @@
 #!/bin/bash -e
 
 #
+# first argument is commit to checkout, or nothing
+#
 # creates go.tar.gz, a nice customized golang.org distribution for linux with emacs support
 #
 
@@ -21,7 +23,10 @@ cd ..
 export GOROOT_BOOTSTRAP=`pwd`
 
 cd ~/go/src
-git checkout 8ac129e5304c6d16b4562c3f13437765d7c8a184
+
+if (( $# > 0 )); then
+    git checkout $1
+fi
 
 ./all.bash 2>&1 | tee ~/log.txt
 
