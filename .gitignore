@@ -1,6 +1,5 @@
 *~
 \#*
-go
 go*.tar.gz
 .vagrant
 golang_rsa

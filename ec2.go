@@ -4,17 +4,21 @@ package main
 
 import (
 	"bufio"
+	"bytes"
 	"flag"
 	"os"
 	"os/exec"
 	"os/user"
 	"path/filepath"
+	"sort"
+	"strconv"
 	"strings"
 	"text/template"
+	"time"
 )
 
 func main() {
-	var profile, commit, s3gz, s3log string
+	var profile, commit, s3gz, candidates, s3log string
 	var terminate, dryrun bool
 	flag.StringVar(&s3gz, "s3gz", "", "s3 url to store distribution")
 	flag.StringVar(&s3log, "s3log", "", "s3 url to store log")
@@ -22,7 +26,12 @@ func main() {
 	flag.StringVar(&commit, "commit", "master", "git branch or commit to build")
 	flag.BoolVar(&terminate, "terminate", true, "whether to terminate instance afterwards")
 	flag.BoolVar(&dryrun, "dryrun", false, "don't launch any machines")
+	flag.StringVar(&candidates, "gen", "", "generate candidate command lines with given bucket")
 	flag.Parse()
+	if len(candidates) > 0 {
+		gen(candidates)
+		return
+	}
 	auth := LoadProfile(profile)
 	const driver = "ec2-driver.sh"
 	f, err := os.Create(driver)
@@ -41,6 +50,85 @@ func main() {
 	if !dryrun {
 		AwsCli("ec2", "run-instances", "--image-id", "ami-ee793a86", "--instance-type", "m3.xlarge", "--key-name", "golang_rsa", "--user-data", "file://"+driver)
 	}
+}
+
+func gen(bucket string) {
+
+	t := template.Must(template.New("nodes.gv").Parse(`go run ec2.go -commit {{.commit}} -s3gz s3://{{.bucket}}/go_{{.commit}}.tar.gz -s3log s3://{{.bucket}}/log_{{.commit}}.txt
+`))
+	for _, c := range getLogs("go") {
+		check(t.Execute(os.Stdout, map[string]interface{}{
+			"commit": c.Hash[:10],
+			"bucket": bucket,
+		}))
+	}
+}
+
+type Commit struct {
+	Hash          string
+	Author        string
+	Comment       string
+	AuthorTime    time.Time
+	CommitterTime time.Time
+}
+
+type Commits []Commit
+
+func (c Commits) Len() int {
+	return len(c)
+}
+
+func (c Commits) Less(i, j int) bool {
+	return c[i].CommitterTime.Before(c[j].CommitterTime)
+}
+
+func (c Commits) Swap(i, j int) {
+	c[i], c[j] = c[j], c[i]
+}
+
+func getLogs(dir string) (out Commits) {
+	atimes := getLogField(dir, "%at")
+	ctimes := getLogField(dir, "%ct")
+	authors := getLogField(dir, "%an")
+	comments := getLogField(dir, "%s")
+	for h, t := range ctimes {
+		c := Commit{
+			Hash:          h,
+			Author:        authors[h],
+			Comment:       comments[h],
+			AuthorTime:    gitTime(atimes[h]),
+			CommitterTime: gitTime(t),
+		}
+		out = append(out, c)
+	}
+	sort.Sort(sort.Reverse(out))
+	return
+}
+
+func gitTime(s string) time.Time {
+	f := strings.Fields(s)
+	u, err := strconv.ParseInt(f[0], 10, 64)
+	check(err)
+	return time.Unix(u, 0)
+}
+
+func getLogField(dir string, pretty string) map[string]string {
+	out := make(map[string]string)
+	buf := new(bytes.Buffer)
+	cmd := exec.Command(`git`, `log`, `--pretty=%H `+pretty)
+	cmd.Dir = dir
+	cmd.Stdout = buf
+	check(cmd.Run())
+	s := bufio.NewScanner(buf)
+	for s.Scan() {
+		line := s.Text()
+		i := strings.Index(line, " ")
+		hash := line[:i]
+		field := line[i+1:]
+		out[hash] = field
+	}
+	check(s.Err())
+	return out
 }
 
 func AwsCli(args ...string) error {
