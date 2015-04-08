@@ -6,3 +6,4 @@ go*.tar.gz
 golang_rsa
 golang_rsa.pub
 ec2-driver.sh
+log.txt

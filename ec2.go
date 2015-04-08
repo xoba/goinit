@@ -19,7 +19,7 @@ func main() {
 	flag.StringVar(&s3gz, "s3gz", "", "s3 url to store distribution")
 	flag.StringVar(&s3log, "s3log", "", "s3 url to store log")
 	flag.StringVar(&profile, "profile", "", "aws cli profile to use")
-	flag.StringVar(&commit, "commit", "8ac129e5304c6d16b4562c3f13437765d7c8a184", "golang commit to build")
+	flag.StringVar(&commit, "commit", "master", "git branch or commit to build")
 	flag.BoolVar(&terminate, "terminate", true, "whether to terminate instance afterwards")
 	flag.BoolVar(&dryrun, "dryrun", false, "don't launch any machines")
 	flag.Parse()
