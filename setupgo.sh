@@ -5,6 +5,6 @@
 # sudo aptitude update && sudo aptitude install -y emacs
 cat >> ~/.bashrc <<EOF
 export GOROOT=~/go
-export PATH=$PATH:~/go/bin
+export PATH=~/go/bin:$PATH
 EOF
 cp ~/go/misc/emacs/.emacs ~/
