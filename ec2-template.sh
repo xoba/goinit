@@ -24,6 +24,7 @@ cd ~/
 cat > latest.sh <<EOF
 #!/bin/bash
 wget -N {{.s3gzurl}}
+rm -rf go
 tar xf {{.s3gzkey}}
 EOF
 aws s3 cp latest.sh {{.latest}}
