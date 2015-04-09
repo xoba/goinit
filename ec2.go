@@ -5,6 +5,7 @@ package main
 import (
 	"bufio"
 	"bytes"
+	"encoding/json"
 	"flag"
 	"fmt"
 	"net/url"
@@ -19,15 +20,15 @@ import (
 	"time"
 )
 
-type S3Url string
+type S3Uri string
 
-func (s S3Url) Bucket() string {
+func (s S3Uri) Bucket() string {
 	u, err := url.Parse(string(s))
 	check(err)
 	return u.Host
 }
 
-func (s S3Url) Key() string {
+func (s S3Uri) Key() string {
 	u, err := url.Parse(string(s))
 	check(err)
 	if len(u.Path) > 0 {
@@ -36,7 +37,7 @@ func (s S3Url) Key() string {
 	return u.Path
 }
 
-func (s S3Url) Url() string {
+func (s S3Uri) Url() string {
 	return fmt.Sprintf("https://s3.amazonaws.com/%s/%s", s.Bucket(), s.Key())
 }
 
@@ -69,8 +70,8 @@ func main() {
 		"commit":    commit,
 		"s3gz":      s3gz,
 		"latest":    latest,
-		"s3gzurl":   S3Url(s3gz).Url(),
-		"s3gzkey":   S3Url(s3gz).Key(),
+		"s3gzurl":   S3Uri(s3gz).Url(),
+		"s3gzkey":   S3Uri(s3gz).Key(),
 		"s3log":     s3log,
 		"accessKey": auth.AccessKey,
 		"secretKey": auth.SecretKey,
@@ -78,7 +79,12 @@ func main() {
 	}))
 	f.Close()
 	if !dryrun {
-		AwsCli("ec2", "run-instances", "--image-id", "ami-ee793a86", "--instance-type", "m3.xlarge", "--key-name", "golang_rsa", "--user-data", "file://"+driver)
+		r, err := AwsCli("ec2", "run-instances", "--image-id", "ami-ee793a86", "--instance-type", "m3.xlarge", "--key-name", "golang_rsa", "--user-data", "file://"+driver)
+		check(err)
+		fmt.Println(r)
+		if len(latest) > 0 {
+			fmt.Printf("check %s for install script\n", S3Uri(latest).Url())
+		}
 	}
 }
 
@@ -167,11 +173,28 @@ func getLogField(dir string, pretty string) map[string]string {
 	return out
 }
 
-func AwsCli(args ...string) error {
+type object map[string]interface{}
+
+func (o object) String() string {
+	buf, err := json.Marshal(o)
+	check(err)
+	return string(buf)
+}
+
+func AwsCli(args ...string) (object, error) {
+	buf := new(bytes.Buffer)
 	cmd := exec.Command("aws", args...)
-	cmd.Stdout = os.Stdout
+	cmd.Stdout = buf
 	cmd.Stderr = os.Stderr
-	return cmd.Run()
+	if err := cmd.Run(); err != nil {
+		return nil, err
+	}
+	m := make(map[string]interface{})
+	d := json.NewDecoder(buf)
+	if err := d.Decode(&m); err != nil {
+		return nil, err
+	}
+	return m, nil
 }
 
 type AwsAuth struct {
