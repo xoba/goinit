@@ -20,6 +20,14 @@ cd goinit
 cd ~/
 {{ if .s3gz }}if [ -f go.tar.gz ]; then
     aws s3 cp go.tar.gz {{.s3gz}}
+{{if .latest}}
+cat > latest.sh <<EOF
+#!/bin/bash
+wget -N {{.s3gzurl}}
+tar xf {{.s3gzkey}}
+EOF
+aws s3 cp latest.sh {{.latest}}
+{{end}}
 fi
 {{end}}
 {{ if .s3log }}aws s3 cp log.txt {{.s3log}}

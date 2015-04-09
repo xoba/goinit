@@ -7,6 +7,7 @@ import (
 	"bytes"
 	"flag"
 	"fmt"
+	"net/url"
 	"os"
 	"os/exec"
 	"os/user"
@@ -18,8 +19,29 @@ import (
 	"time"
 )
 
+type S3Url string
+
+func (s S3Url) Bucket() string {
+	u, err := url.Parse(string(s))
+	check(err)
+	return u.Host
+}
+
+func (s S3Url) Key() string {
+	u, err := url.Parse(string(s))
+	check(err)
+	if len(u.Path) > 0 {
+		return u.Path[1:]
+	}
+	return u.Path
+}
+
+func (s S3Url) Url() string {
+	return fmt.Sprintf("https://s3.amazonaws.com/%s/%s", s.Bucket(), s.Key())
+}
+
 func main() {
-	var profile, commit, s3gz, candidates, s3log string
+	var s3gz, s3log, latest, profile, commit, genbucket string
 	var terminate, dryrun bool
 	flag.StringVar(&s3gz, "s3gz", "", "s3 url to store distribution")
 	flag.StringVar(&s3log, "s3log", "", "s3 url to store log")
@@ -27,12 +49,14 @@ func main() {
 	flag.StringVar(&commit, "commit", "master", "git branch or commit to build")
 	flag.BoolVar(&terminate, "terminate", true, "whether to terminate instance afterwards")
 	flag.BoolVar(&dryrun, "dryrun", false, "don't launch any machines")
-	flag.StringVar(&candidates, "gen", "", "generate candidate command lines with given bucket")
+	flag.StringVar(&latest, "latest", "", "populate a 'latest' file on s3")
+	flag.StringVar(&genbucket, "gen", "", "generate candidate command lines with given bucket")
 	flag.Parse()
+
 	auth, err := LoadProfile(profile)
 	check(err)
-	if len(candidates) > 0 {
-		gen(profile, candidates)
+	if len(genbucket) > 0 {
+		gen(profile, genbucket)
 		return
 	}
 	const driver = "ec2-driver.sh"
@@ -43,6 +67,9 @@ func main() {
 	check(t.Execute(f, map[string]interface{}{
 		"commit":    commit,
 		"s3gz":      s3gz,
+		"latest":    latest,
+		"s3gzurl":   S3Url(s3gz).Url(),
+		"s3gzkey":   S3Url(s3gz).Key(),
 		"s3log":     s3log,
 		"accessKey": auth.AccessKey,
 		"secretKey": auth.SecretKey,
@@ -56,10 +83,10 @@ func main() {
 
 func gen(profile, bucket string) {
 
-	t := template.Must(template.New("nodes.gv").Parse(`go run ec2.go -profile {{.profile}} -commit {{.commit}} -s3gz s3://{{.bucket}}/go_{{.commit}}.tar.gz -s3log s3://{{.bucket}}/log_{{.commit}}.txt # {{.date}} {{.comment}}
+	t := template.Must(template.New("nodes.gv").Parse(`go run ec2.go -latest s3://{{.bucket}}/latest.sh -profile {{.profile}} -commit {{.commit}} -s3gz s3://{{.bucket}}/go_{{.commit}}.tar.gz -s3log s3://{{.bucket}}/log_{{.commit}}.txt # {{.date}} {{.comment}}
 `))
 	for i, c := range getLogs("go") {
-		if i > 30 {
+		if i > 7 {
 			break
 		}
 		check(t.Execute(os.Stdout, map[string]interface{}{
@@ -169,9 +196,12 @@ func LoadProfile(p string) (*AwsAuth, error) {
 	var active bool
 	s := bufio.NewScanner(f)
 	for s.Scan() {
-		line := s.Text()
+		line := strings.TrimSpace(s.Text())
+		if len(line) == 0 {
+			continue
+		}
 		if strings.HasPrefix(line, "[") {
-			if line == "["+p+"]" {
+			if line == "["+p+"]" || line == "[profile "+p+"]" {
 				active = true
 			} else {
 				active = false
