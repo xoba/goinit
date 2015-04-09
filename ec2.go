@@ -83,7 +83,7 @@ func main() {
 
 func gen(profile, bucket string) {
 
-	t := template.Must(template.New("nodes.gv").Parse(`go run ec2.go -latest s3://{{.bucket}}/latest.sh -profile {{.profile}} -commit {{.commit}} -s3gz s3://{{.bucket}}/go_{{.commit}}.tar.gz -s3log s3://{{.bucket}}/log_{{.commit}}.txt # {{.date}} {{.comment}}
+	t := template.Must(template.New("nodes.gv").Parse(`go run ec2.go -latest s3://{{.bucket}}/install.sh -profile {{.profile}} -commit {{.commit}} -s3gz s3://{{.bucket}}/{{.time}}_{{.commit}}.tar.gz -s3log s3://{{.bucket}}/log_{{.time}}_{{.commit}}.txt # {{.comment}}
 `))
 	for i, c := range getLogs("go") {
 		if i > 7 {
@@ -91,9 +91,9 @@ func gen(profile, bucket string) {
 		}
 		check(t.Execute(os.Stdout, map[string]interface{}{
 			"profile": profile,
-			"commit":  c.Hash[:10],
+			"commit":  c.Hash[:4],
 			"bucket":  bucket,
-			"date":    c.CommitterTime,
+			"time":    c.CommitterTime.Format("20060102T150405Z"),
 			"comment": c.Comment,
 		}))
 	}
@@ -144,7 +144,7 @@ func gitTime(s string) time.Time {
 	f := strings.Fields(s)
 	u, err := strconv.ParseInt(f[0], 10, 64)
 	check(err)
-	return time.Unix(u, 0)
+	return time.Unix(u, 0).UTC()
 }
 
 func getLogField(dir string, pretty string) map[string]string {

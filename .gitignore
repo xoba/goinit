@@ -6,3 +6,4 @@ golang_rsa
 golang_rsa.pub
 ec2-driver.sh
 log.txt
+ec2
