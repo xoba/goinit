@@ -98,7 +98,7 @@ func gen(profile, bucket string) {
 		}
 		check(t.Execute(os.Stdout, map[string]interface{}{
 			"profile": profile,
-			"commit":  c.Hash[:10],
+			"commit":  c.Hash[:12],
 			"bucket":  bucket,
 			"time":    c.CommitterTime.Format("20060102T150405Z"),
 			"comment": c.Comment,
