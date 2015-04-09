@@ -65,6 +65,7 @@ func main() {
 	t, err := template.ParseFiles("ec2-template.sh")
 	check(err)
 	check(t.Execute(f, map[string]interface{}{
+		"comment":   fmt.Sprintf("go language commit %s, built %v, for linux", commit, time.Now().UTC()),
 		"commit":    commit,
 		"s3gz":      s3gz,
 		"latest":    latest,

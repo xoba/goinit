@@ -23,6 +23,9 @@ cd ~/
 {{if .latest}}
 cat > latest.sh <<EOF
 #!/bin/bash
+#
+# {{.comment}}
+#
 wget -N {{.s3gzurl}}
 rm -rf go
 tar xf {{.s3gzkey}}
