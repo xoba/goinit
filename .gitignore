@@ -1,9 +1,9 @@
 *~
 \#*
-go*.tar.gz
-.vagrant
+ec2
+ec2-driver.sh
 golang_rsa
 golang_rsa.pub
-ec2-driver.sh
+go*.tar.gz
 log.txt
-ec2
+.vagrant

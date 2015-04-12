@@ -44,6 +44,7 @@ func (s S3Uri) Url() string {
 func main() {
 	var s3gz, s3log, latest, profile, commit, genbucket string
 	var terminate, dryrun bool
+	var ngen int
 	flag.StringVar(&s3gz, "s3gz", "", "s3 url to store distribution")
 	flag.StringVar(&s3log, "s3log", "", "s3 url to store log")
 	flag.StringVar(&profile, "profile", "", "aws cli profile to use")
@@ -52,12 +53,13 @@ func main() {
 	flag.BoolVar(&dryrun, "dryrun", false, "don't launch any machines")
 	flag.StringVar(&latest, "latest", "", "populate a 'latest' file on s3")
 	flag.StringVar(&genbucket, "gen", "", "generate candidate command lines with given bucket")
+	flag.IntVar(&ngen, "n", 1, "number of candidates to generate")
 	flag.Parse()
 
 	auth, err := LoadProfile(profile)
 	check(err)
 	if len(genbucket) > 0 {
-		gen(profile, genbucket)
+		gen(profile, genbucket, ngen)
 		return
 	}
 	const driver = "ec2-driver.sh"
@@ -88,12 +90,12 @@ func main() {
 	}
 }
 
-func gen(profile, bucket string) {
+func gen(profile, bucket string, n int) {
 
 	t := template.Must(template.New("nodes.gv").Parse(`go run ec2.go -latest s3://{{.bucket}}/install.sh -profile {{.profile}} -commit {{.commit}} -s3gz s3://{{.bucket}}/{{.time}}_{{.commit}}.tar.gz -s3log s3://{{.bucket}}/log_{{.time}}_{{.commit}}.txt # {{.comment}}
 `))
 	for i, c := range getLogs("go") {
-		if i > 7 {
+		if i == n {
 			break
 		}
 		check(t.Execute(os.Stdout, map[string]interface{}{
