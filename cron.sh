@@ -3,7 +3,7 @@
 # profile is $1, bucket is $2
 #
 cd ~/goinit
-echo "date $1 $2" > log.txt
+echo "`date` $1 $2" >> log.txt
 cd go
 git pull
 cd ..
