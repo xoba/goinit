@@ -185,7 +185,7 @@ func (o object) String() string {
 
 func AwsCli(args ...string) (object, error) {
 	buf := new(bytes.Buffer)
-	cmd := exec.Command("aws", args...)
+	cmd := exec.Command("/usr/bin/aws", args...)
 	cmd.Stdout = buf
 	cmd.Stderr = os.Stderr
 	if err := cmd.Run(); err != nil {
