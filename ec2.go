@@ -41,6 +41,11 @@ func (s S3Uri) Url() string {
 	return fmt.Sprintf("https://s3.amazonaws.com/%s/%s", s.Bucket(), s.Key())
 }
 
+func getInstanceId(o object) string {
+	instances := o["Instances"].([]interface{})[0].(map[string]interface{})
+	return instances["InstanceId"].(string)
+}
+
 func main() {
 	var s3gz, s3log, latest, profile, commit, genbucket string
 	var terminate, dryrun bool
@@ -87,6 +92,13 @@ func main() {
 		if len(latest) > 0 {
 			fmt.Printf("check %s for install script\n", S3Uri(latest).Url())
 		}
+
+		dt := time.Hour
+		fmt.Printf("going to terminate instance %q in %v\n", getInstanceId(r), dt)
+		time.Sleep(time.Hour)
+		r2, err := AwsCli("ec2", "terminate-instances", "--instance-ids", getInstanceId(r))
+		check(err)
+		fmt.Println(r2)
 	}
 }
 
