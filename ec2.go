@@ -86,7 +86,7 @@ func main() {
 	}))
 	f.Close()
 	if !dryrun {
-		r, err := AwsCli("ec2", "run-instances", "--image-id", "ami-ee793a86", "--instance-type", "m3.xlarge", "--key-name", "golang_rsa", "--user-data", "file://"+driver)
+		r, err := AwsCli("ec2", "--profile", profile, "run-instances", "--image-id", "ami-ee793a86", "--instance-type", "m3.xlarge", "--key-name", "golang_rsa", "--user-data", "file://"+driver)
 		check(err)
 		fmt.Println(r)
 		if len(latest) > 0 {
@@ -96,7 +96,7 @@ func main() {
 		dt := time.Hour
 		fmt.Printf("going to terminate instance %q in %v\n", getInstanceId(r), dt)
 		time.Sleep(time.Hour)
-		r2, err := AwsCli("ec2", "terminate-instances", "--instance-ids", getInstanceId(r))
+		r2, err := AwsCli("ec2", "--profile", profile, "terminate-instances", "--instance-ids", getInstanceId(r))
 		check(err)
 		fmt.Println(r2)
 	}
@@ -196,6 +196,17 @@ func (o object) String() string {
 }
 
 func AwsCli(args ...string) (object, error) {
+	{
+		var hasProfile bool
+		for _, a := range args {
+			if a == "--profile" {
+				hasProfile = true
+			}
+		}
+		if !hasProfile {
+			return nil, fmt.Errorf("oops, no profile!")
+		}
+	}
 	buf := new(bytes.Buffer)
 	cmd := exec.Command("/usr/bin/aws", args...)
 	cmd.Stdout = buf
