@@ -12,7 +12,7 @@ export GOROOT=~/go
 export GOPATH=/tmp/gopath
 export PATH=$GOROOT/bin:$GOPATH/bin:$PATH
 
-git clone https://github.com/golang/go.git
+git clone https://go.googlesource.com/go
 
 # build bootstrap go
 git clone go go1.4
