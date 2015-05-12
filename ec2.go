@@ -47,9 +47,10 @@ func getInstanceId(o object) string {
 }
 
 func main() {
-	var s3gz, s3log, latest, profile, commit, genbucket string
+	var s3gz, s3log, latest, profile, commit, genbucket, committed string
 	var terminate, dryrun bool
 	var ngen int
+	flag.StringVar(&committed, "committed", "", "time of commit, if available")
 	flag.StringVar(&s3gz, "s3gz", "", "s3 url to store distribution")
 	flag.StringVar(&s3log, "s3log", "", "s3 url to store log")
 	flag.StringVar(&profile, "profile", "", "aws cli profile to use")
@@ -73,7 +74,7 @@ func main() {
 	t, err := template.ParseFiles("ec2-template.sh")
 	check(err)
 	check(t.Execute(f, map[string]interface{}{
-		"comment":   fmt.Sprintf("go language commit %s, built %v, for linux", commit, time.Now().UTC()),
+		"comment":   fmt.Sprintf("go language commit %s, committed %q, built %v, for linux", commit, committed, time.Now().UTC()),
 		"commit":    commit,
 		"s3gz":      s3gz,
 		"latest":    latest,
@@ -104,18 +105,19 @@ func main() {
 
 func gen(profile, bucket string, n int) {
 
-	t := template.Must(template.New("nodes.gv").Parse(`./ec2 -latest s3://{{.bucket}}/install.sh -profile {{.profile}} -commit {{.commit}} -s3gz s3://{{.bucket}}/{{.time}}_{{.commit}}.tar.gz -s3log s3://{{.bucket}}/log_{{.time}}_{{.commit}}.txt # {{.comment}}
+	t := template.Must(template.New("nodes.gv").Parse(`./ec2 -committed {{.committed}} -latest s3://{{.bucket}}/install.sh -profile {{.profile}} -commit {{.commit}} -s3gz s3://{{.bucket}}/{{.time}}_{{.commit}}.tar.gz -s3log s3://{{.bucket}}/log_{{.time}}_{{.commit}}.txt # {{.comment}}
 `))
 	for i, c := range getLogs("go") {
 		if i == n {
 			break
 		}
 		check(t.Execute(os.Stdout, map[string]interface{}{
-			"profile": profile,
-			"commit":  c.Hash[:12],
-			"bucket":  bucket,
-			"time":    c.CommitterTime.Format("20060102T150405Z"),
-			"comment": c.Comment,
+			"profile":   profile,
+			"commit":    c.Hash[:12],
+			"committed": c.CommitterTime.Format("20060102T150405Z"),
+			"bucket":    bucket,
+			"time":      c.CommitterTime.Format("20060102T150405Z"),
+			"comment":   c.Comment,
 		}))
 	}
 }
