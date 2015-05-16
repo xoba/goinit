@@ -74,7 +74,7 @@ func main() {
 	t, err := template.ParseFiles("ec2-template.sh")
 	check(err)
 	check(t.Execute(f, map[string]interface{}{
-		"comment":   fmt.Sprintf("go language commit %s, committed %q, built %v, for linux", commit, committed, time.Now().UTC()),
+		"comment":   fmt.Sprintf("go language commit %s, committed %s, built %v, for linux", commit, committed, time.Now().UTC()),
 		"commit":    commit,
 		"s3gz":      s3gz,
 		"latest":    latest,
@@ -94,7 +94,7 @@ func main() {
 			fmt.Printf("check %s for install script\n", S3Uri(latest).Url())
 		}
 
-		dt := time.Hour
+		dt := 55 * time.Minute
 		fmt.Printf("going to terminate instance %q in %v\n", getInstanceId(r), dt)
 		time.Sleep(time.Hour)
 		r2, err := AwsCli("ec2", "--profile", profile, "terminate-instances", "--instance-ids", getInstanceId(r))
@@ -210,7 +210,7 @@ func AwsCli(args ...string) (object, error) {
 		}
 	}
 	buf := new(bytes.Buffer)
-	cmd := exec.Command("/usr/bin/aws", args...)
+	cmd := exec.Command("aws", args...)
 	cmd.Stdout = buf
 	cmd.Stderr = os.Stderr
 	if err := cmd.Run(); err != nil {
