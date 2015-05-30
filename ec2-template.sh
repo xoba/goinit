@@ -29,6 +29,7 @@ cat > latest.sh <<EOF
 wget -N {{.s3gzurl}}
 rm -rf go
 tar xf {{.s3gzkey}}
+{{.newgo}}
 EOF
 aws s3 cp latest.sh {{.latest}}
 {{end}}

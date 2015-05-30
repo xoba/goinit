@@ -47,7 +47,7 @@ func getInstanceId(o object) string {
 }
 
 func main() {
-	var s3gz, s3log, latest, profile, commit, genbucket, committed string
+	var s3gz, s3log, latest, latesturi, profile, commit, genbucket, committed string
 	var terminate, dryrun bool
 	var ngen int
 	flag.StringVar(&committed, "committed", "", "time of commit, if available")
@@ -58,6 +58,7 @@ func main() {
 	flag.BoolVar(&terminate, "terminate", true, "whether to terminate instance afterwards")
 	flag.BoolVar(&dryrun, "dryrun", false, "don't launch any machines")
 	flag.StringVar(&latest, "latest", "", "populate a 'latest' file on s3")
+	flag.StringVar(&latesturi, "latesturi", "", "uri version of latest")
 	flag.StringVar(&genbucket, "gen", "", "generate candidate command lines with given bucket")
 	flag.IntVar(&ngen, "n", 1, "number of candidates to generate")
 	flag.Parse()
@@ -73,10 +74,21 @@ func main() {
 	check(err)
 	t, err := template.ParseFiles("ec2-template.sh")
 	check(err)
+
+	var newgo string
+	{
+		buf := new(bytes.Buffer)
+		fmt.Fprintf(buf, "#\\x21/bin/bash\n")
+		fmt.Fprintf(buf, "cd ~/\n")
+		fmt.Fprintf(buf, "curl %s | bash", latesturi)
+		newgo = fmt.Sprintf("echo -e %q > go/bin/newgo; chmod u+x go/bin/newgo", buf.String())
+	}
+
 	check(t.Execute(f, map[string]interface{}{
 		"comment":   fmt.Sprintf("go language commit %s, committed %s, built %v, for linux", commit, committed, time.Now().UTC()),
 		"commit":    commit,
 		"s3gz":      s3gz,
+		"newgo":     newgo,
 		"latest":    latest,
 		"s3gzurl":   S3Uri(s3gz).Url(),
 		"s3gzkey":   S3Uri(s3gz).Key(),
@@ -105,7 +117,7 @@ func main() {
 
 func gen(profile, bucket string, n int) {
 
-	t := template.Must(template.New("nodes.gv").Parse(`./ec2 -committed {{.committed}} -latest s3://{{.bucket}}/install.sh -profile {{.profile}} -commit {{.commit}} -s3gz s3://{{.bucket}}/{{.time}}_{{.commit}}.tar.gz -s3log s3://{{.bucket}}/log_{{.time}}_{{.commit}}.txt # {{.comment}}
+	t := template.Must(template.New("nodes.gv").Parse(`./ec2 -committed {{.committed}} -latest s3://{{.bucket}}/install.sh -latesturi https://s3.amazonaws.com/{{.bucket}}/install.sh -profile {{.profile}} -commit {{.commit}} -s3gz s3://{{.bucket}}/{{.time}}_{{.commit}}.tar.gz -s3log s3://{{.bucket}}/log_{{.time}}_{{.commit}}.txt # {{.comment}}
 `))
 	for i, c := range getLogs("go") {
 		if i == n {
