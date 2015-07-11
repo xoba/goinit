@@ -4,10 +4,7 @@
 #
 cd ~/goinit
 echo "`date` starting $1 $2" >> log.txt
-if [ ! -f ec2 ];
-then
-    go build ec2.go
-fi
+make
 cd go
 git checkout master
 git pull
