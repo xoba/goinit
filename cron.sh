@@ -5,6 +5,7 @@
 cd ~/goinit
 echo "`date` starting $1 $2" >> log.txt
 cd go
+git checkout master
 git pull
 cd ..
 export PATH=$PATH:/usr/local/bin
