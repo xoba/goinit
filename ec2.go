@@ -117,7 +117,7 @@ func main() {
 
 func gen(profile, bucket string, n int) {
 
-	t := template.Must(template.New("nodes.gv").Parse(`./ec2 -committed {{.committed}} -latest s3://{{.bucket}}/install.sh -latesturi https://s3.amazonaws.com/{{.bucket}}/install.sh -profile {{.profile}} -commit {{.commit}} -s3gz s3://{{.bucket}}/{{.time}}_{{.commit}}.tar.gz -s3log s3://{{.bucket}}/log_{{.time}}_{{.commit}}.txt # {{.comment}}
+	t := template.Must(template.New("command").Parse(`./ec2 -committed {{.committed}} -latest s3://{{.bucket}}/install.sh -latesturi https://s3.amazonaws.com/{{.bucket}}/install.sh -profile {{.profile}} -commit {{.commit}} -s3gz s3://{{.bucket}}/{{.time}}_{{.commit}}.tar.gz -s3log s3://{{.bucket}}/log_{{.time}}_{{.commit}}.txt # {{.comment}}
 `))
 	for i, c := range getLogs("go") {
 		if i == n {
