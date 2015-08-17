@@ -40,6 +40,7 @@ go get github.com/dougm/goflymake
 go get code.google.com/p/rog-go/exp/cmd/godef
 go get code.google.com/p/go.codereview/cmd/hgapplydiff
 go get github.com/golang/lint/golint
+go get golang.org/x/tools/cmd/gorename
 
 mkdir -p ../misc/emacs
 git clone https://github.com/dominikh/go-mode.el.git
