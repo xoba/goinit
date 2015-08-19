@@ -41,6 +41,9 @@ go get code.google.com/p/rog-go/exp/cmd/godef
 go get code.google.com/p/go.codereview/cmd/hgapplydiff
 go get github.com/golang/lint/golint
 go get golang.org/x/tools/cmd/gorename
+go get golang.org/x/tools/cmd/callgraph
+go get golang.org/x/tools/cmd/gomvpkg
+go get golang.org/x/tools/cmd/oracle
 
 mkdir -p ../misc/emacs
 git clone https://github.com/dominikh/go-mode.el.git
