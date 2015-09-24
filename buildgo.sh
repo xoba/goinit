@@ -17,7 +17,7 @@ git clone https://go.googlesource.com/go
 # build bootstrap go
 git clone go go1.4
 cd go1.4/src
-git checkout go1.4.2
+git checkout go1.4.3
 ./make.bash
 cd ..
 export GOROOT_BOOTSTRAP=`pwd`
