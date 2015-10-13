@@ -18,7 +18,7 @@ git clone https://go.googlesource.com/go
 git clone go go1.4
 cd go1.4/src
 git checkout go1.4.3
-./make.bash
+time ./make.bash
 cd ..
 export GOROOT_BOOTSTRAP=`pwd`
 
@@ -28,7 +28,7 @@ if (( $# > 0 )); then
     git checkout $1
 fi
 
-./all.bash 2>&1 | tee ~/log.txt
+time ./all.bash 2>&1 | tee ~/log.txt
 
 go get golang.org/x/tools/cmd/cover
 go get golang.org/x/tools/cmd/godoc
@@ -38,7 +38,6 @@ go get code.google.com/p/go.tools/cmd/goimports
 go get code.google.com/p/go.tools/cmd/gotype
 go get github.com/dougm/goflymake
 go get code.google.com/p/rog-go/exp/cmd/godef
-go get code.google.com/p/go.codereview/cmd/hgapplydiff
 go get github.com/golang/lint/golint
 go get golang.org/x/tools/cmd/gorename
 go get golang.org/x/tools/cmd/callgraph

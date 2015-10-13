@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # configure machine:
-aptitude update && aptitude install -y awscli curl libc6-i386 gcc libc6-dev mercurial git libtool make pkg-config emacs ntp
+yum -y install tmux emacs git hg libtool gcc
 mkdir -p ~/.aws
 cat > ~/.aws/config <<EOF
 [default]

@@ -47,15 +47,18 @@ func getInstanceId(o object) string {
 }
 
 func main() {
-	var s3gz, s3log, latest, latesturi, profile, commit, genbucket, committed string
+	var ami, s3gz, s3log, latest, latesturi, profile, commit, genbucket, committed string
 	var terminate, dryrun bool
 	var ngen int
+	var force time.Duration
+	flag.StringVar(&ami, "ami", "ami-e3106686", "ec2 ami to use")
 	flag.StringVar(&committed, "committed", "", "time of commit, if available")
 	flag.StringVar(&s3gz, "s3gz", "", "s3 url to store distribution")
 	flag.StringVar(&s3log, "s3log", "", "s3 url to store log")
 	flag.StringVar(&profile, "profile", "", "aws cli profile to use")
 	flag.StringVar(&commit, "commit", "master", "git branch or commit to build")
-	flag.BoolVar(&terminate, "terminate", true, "whether to terminate instance afterwards")
+	flag.BoolVar(&terminate, "terminate", false, "whether to terminate instance afterwards")
+	flag.DurationVar(&force, "force", 90*time.Minute, "duration after which to forcibly terminate")
 	flag.BoolVar(&dryrun, "dryrun", false, "don't launch any machines")
 	flag.StringVar(&latest, "latest", "", "populate a 'latest' file on s3")
 	flag.StringVar(&latesturi, "latesturi", "", "uri version of latest")
@@ -99,16 +102,14 @@ func main() {
 	}))
 	f.Close()
 	if !dryrun {
-		r, err := AwsCli("ec2", "--profile", profile, "run-instances", "--image-id", "ami-ee793a86", "--instance-type", "m3.xlarge", "--key-name", "golang_rsa", "--user-data", "file://"+driver)
+		r, err := AwsCli("ec2", "--profile", profile, "run-instances", "--image-id", ami, "--instance-type", "m3.xlarge", "--key-name", "golang_rsa", "--user-data", "file://"+driver)
 		check(err)
 		fmt.Println(r)
 		if len(latest) > 0 {
 			fmt.Printf("check %s for install script\n", S3Uri(latest).Url())
 		}
-
-		dt := 55 * time.Minute
-		fmt.Printf("going to terminate instance %q in %v\n", getInstanceId(r), dt)
-		time.Sleep(time.Hour)
+		fmt.Printf("going to terminate instance %q in %v\n", getInstanceId(r), force)
+		time.Sleep(force)
 		r2, err := AwsCli("ec2", "--profile", profile, "terminate-instances", "--instance-ids", getInstanceId(r))
 		check(err)
 		fmt.Println(r2)
