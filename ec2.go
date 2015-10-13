@@ -57,7 +57,7 @@ func main() {
 	flag.StringVar(&s3log, "s3log", "", "s3 url to store log")
 	flag.StringVar(&profile, "profile", "", "aws cli profile to use")
 	flag.StringVar(&commit, "commit", "master", "git branch or commit to build")
-	flag.BoolVar(&terminate, "terminate", false, "whether to terminate instance afterwards")
+	flag.BoolVar(&terminate, "terminate", true, "whether to terminate instance afterwards")
 	flag.DurationVar(&force, "force", 90*time.Minute, "duration after which to forcibly terminate")
 	flag.BoolVar(&dryrun, "dryrun", false, "don't launch any machines")
 	flag.StringVar(&latest, "latest", "", "populate a 'latest' file on s3")
