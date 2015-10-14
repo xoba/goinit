@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # configure machine:
-yum -y install tmux emacs git hg libtool gcc patch
+yum -y update
+yum -y install tmux emacs git hg libtool gcc patch glibc-static
 mkdir -p ~/.aws
 cat > ~/.aws/config <<EOF
 [default]
