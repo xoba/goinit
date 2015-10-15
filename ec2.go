@@ -8,6 +8,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"log"
 	"net/url"
 	"os"
 	"os/exec"
@@ -104,15 +105,17 @@ func main() {
 	if !dryrun {
 		r, err := AwsCli("ec2", "--profile", profile, "run-instances", "--image-id", ami, "--instance-type", "m3.xlarge", "--key-name", "golang_rsa", "--user-data", "file://"+driver)
 		check(err)
-		fmt.Println(r)
+		log.Printf("start ec2: %v", r)
 		if len(latest) > 0 {
-			fmt.Printf("check %s for install script\n", S3Uri(latest).Url())
+			log.Printf("check %s for install script\n", S3Uri(latest).Url())
 		}
-		fmt.Printf("going to terminate instance %q in %v\n", getInstanceId(r), force)
+		log.Printf("going to terminate instance %q in %v\n", getInstanceId(r), force)
 		time.Sleep(force)
 		r2, err := AwsCli("ec2", "--profile", profile, "terminate-instances", "--instance-ids", getInstanceId(r))
-		check(err)
-		fmt.Println(r2)
+		if err != nil {
+			log.Fatalf("error terminating: %v", err)
+		}
+		log.Println(r2)
 	}
 }
 
