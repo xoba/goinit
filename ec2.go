@@ -52,7 +52,7 @@ func main() {
 	var terminate, dryrun bool
 	var ngen int
 	var force time.Duration
-	flag.StringVar(&ami, "ami", "ami-e3106686", "ec2 ami to use")
+	flag.StringVar(&ami, "ami", "ami-60b6c60a", "ec2 ami to use")
 	flag.StringVar(&committed, "committed", "", "time of commit, if available")
 	flag.StringVar(&s3gz, "s3gz", "", "s3 url to store distribution")
 	flag.StringVar(&s3log, "s3log", "", "s3 url to store log")
@@ -225,6 +225,7 @@ func AwsCli(args ...string) (object, error) {
 			return nil, fmt.Errorf("oops, no profile!")
 		}
 	}
+	fmt.Printf("%s %s\n", "aws", strings.Join(args, " "))
 	buf := new(bytes.Buffer)
 	cmd := exec.Command("aws", args...)
 	cmd.Stdout = buf
@@ -254,7 +255,7 @@ func LoadProfile(p string) (*AwsAuth, error) {
 	if err != nil {
 		return nil, err
 	}
-	config := filepath.Join(u.HomeDir, ".aws/config")
+	config := filepath.Join(u.HomeDir, ".aws/credentials")
 	f, err := os.Open(config)
 	if err != nil {
 		return nil, err
