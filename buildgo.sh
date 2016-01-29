@@ -34,10 +34,10 @@ go get golang.org/x/tools/cmd/cover
 go get golang.org/x/tools/cmd/godoc
 go get golang.org/x/tools/cmd/vet
 go get golang.org/x/tools/cmd/stringer
-go get code.google.com/p/go.tools/cmd/goimports
-go get code.google.com/p/go.tools/cmd/gotype
+go get golang.org/x/tools/cmd/goimports
+go get golang.org/x/tools/cmd/gotype
 go get github.com/dougm/goflymake
-go get code.google.com/p/rog-go/exp/cmd/godef
+go get github.com/zenoss/rog-go/exp/cmd/godef
 go get github.com/golang/lint/golint
 go get golang.org/x/tools/cmd/gorename
 go get golang.org/x/tools/cmd/callgraph
@@ -54,7 +54,7 @@ cd ..
 rm -rf go-mode.el
 
 # remove a file with syntax errors
-rm -f $GOPATH/src/code.google.com/p/rog-go/exp/abc/audio/output.go
+rm -f $GOPATH/src/github.com/zenoss/rog-go/exp/abc/audio/output.go
 
 cp $GOPATH/src/github.com/dougm/goflymake/*.el $GOROOT/misc/emacs/
 cp $GOPATH/src/github.com/golang/lint/misc/emacs/*.el $GOROOT/misc/emacs/
