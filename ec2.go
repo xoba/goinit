@@ -52,7 +52,7 @@ func main() {
 	var terminate, dryrun bool
 	var ngen int
 	var force time.Duration
-	flag.StringVar(&ami, "ami", "ami-60b6c60a", "ec2 ami to use")
+	flag.StringVar(&ami, "ami", "ami-08111162", "ec2 ami to use")
 	flag.StringVar(&committed, "committed", "", "time of commit, if available")
 	flag.StringVar(&s3gz, "s3gz", "", "s3 url to store distribution")
 	flag.StringVar(&s3log, "s3log", "", "s3 url to store log")

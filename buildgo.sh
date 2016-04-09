@@ -32,7 +32,7 @@ time ./all.bash 2>&1 | tee ~/log.txt
 
 go get golang.org/x/tools/cmd/cover
 go get golang.org/x/tools/cmd/godoc
-go get golang.org/x/tools/cmd/vet
+#go get golang.org/x/tools/cmd/vet
 go get golang.org/x/tools/cmd/stringer
 go get golang.org/x/tools/cmd/goimports
 go get golang.org/x/tools/cmd/gotype
