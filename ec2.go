@@ -82,7 +82,7 @@ func main() {
 	var newgo string
 	{
 		buf := new(bytes.Buffer)
-		fmt.Fprintf(buf, "#\\x21/bin/bash\n")
+		fmt.Fprintf(buf, "#\\x21/bin/bash -e\n")
 		fmt.Fprintf(buf, "cd ~/\n")
 		fmt.Fprintf(buf, "curl %s | bash", latesturi)
 		newgo = fmt.Sprintf("echo -e %q > go/bin/newgo; chmod u+x go/bin/newgo", buf.String())
