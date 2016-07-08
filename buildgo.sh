@@ -30,19 +30,23 @@ fi
 
 time ./all.bash 2>&1 | tee ~/log.txt
 
+# official ones:
 go get golang.org/x/tools/cmd/cover
 go get golang.org/x/tools/cmd/godoc
-#go get golang.org/x/tools/cmd/vet
 go get golang.org/x/tools/cmd/stringer
 go get golang.org/x/tools/cmd/goimports
 go get golang.org/x/tools/cmd/gotype
-go get github.com/dougm/goflymake
-go get github.com/zenoss/rog-go/exp/cmd/godef
-go get github.com/golang/lint/golint
 go get golang.org/x/tools/cmd/gorename
 go get golang.org/x/tools/cmd/callgraph
 go get golang.org/x/tools/cmd/gomvpkg
 go get golang.org/x/tools/cmd/oracle
+
+# semi-official:
+go get github.com/golang/lint/golint
+
+# unofficial:
+go get github.com/dougm/goflymake
+go get github.com/rogpeppe/godef # github.com/zenoss/rog-go/exp/cmd/godef
 
 mkdir -p ../misc/emacs
 git clone https://github.com/dominikh/go-mode.el.git
