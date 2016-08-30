@@ -57,6 +57,8 @@ mv go-mode-load.el ../../misc/emacs
 cd ..
 rm -rf go-mode.el
 
+# TODO: copy go-guru emacs to misc/emacs as well... also, update .emacs file
+
 # remove a file with syntax errors
 rm -f $GOPATH/src/github.com/zenoss/rog-go/exp/abc/audio/output.go
 
