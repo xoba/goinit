@@ -39,7 +39,7 @@ go get golang.org/x/tools/cmd/gotype
 go get golang.org/x/tools/cmd/gorename
 go get golang.org/x/tools/cmd/callgraph
 go get golang.org/x/tools/cmd/gomvpkg
-go get golang.org/x/tools/cmd/oracle
+go get golang.org/x/tools/cmd/guru
 
 # semi-official:
 go get github.com/golang/lint/golint
