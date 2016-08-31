@@ -23,14 +23,15 @@ cd ~/
     aws s3 cp go.tar.gz {{.s3gz}}
 {{if .latest}}
 cat > latest.sh <<EOF
-#!/bin/bash
+#!/bin/bash -e
 #
 # {{.comment}}
 #
 wget -N {{.s3gzurl}}
-rm -rf go
+mv go go.old
 tar xf {{.s3gzkey}}
 {{.newgo}}
+rm -rf go.old
 EOF
 aws s3 cp latest.sh {{.latest}}
 {{end}}
