@@ -79,6 +79,8 @@ cat > $GOROOT/misc/emacs/.emacs <<EOF
 (add-hook 'before-save-hook #'gofmt-before-save)
 (require 'go-flymake)
 (require 'golint)
+(require 'go-guru)
+(require 'go-rename)
 EOF
 
 unset GOOS
