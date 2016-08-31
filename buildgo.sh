@@ -62,8 +62,8 @@ rm -rf go-mode.el
 # remove a file with syntax errors
 rm -f $GOPATH/src/github.com/zenoss/rog-go/exp/abc/audio/output.go
 
-cp $GOPATH/src/github.com/dougm/goflymake/*.el $GOROOT/misc/emacs/
-cp $GOPATH/src/github.com/golang/lint/misc/emacs/*.el $GOROOT/misc/emacs/
+find $GOPATH -name "*.el" -exec cp \{} $GOROOT/misc/emacs/ \;
+
 cp $GOPATH/bin/* $GOROOT/bin/
 
 cat > $GOROOT/misc/emacs/.emacs <<EOF
