@@ -28,7 +28,7 @@ cat > latest.sh <<EOF
 # {{.comment}}
 #
 wget -N {{.s3gzurl}}
-mv go go.old
+mv -f go go.old
 tar xf {{.s3gzkey}}
 {{.newgo}}
 rm -rf go.old
