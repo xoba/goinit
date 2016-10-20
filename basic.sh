@@ -2,6 +2,7 @@
 #
 # basic go build with additional stuff
 #
+cd ~/
 export GOROOT=~/go
 export GOPATH=/tmp/gopaths/`uuidgen`
 export PATH=$GOROOT/bin:$GOPATH/bin:$PATH
@@ -9,8 +10,15 @@ export PATH=$GOROOT/bin:$GOPATH/bin:$PATH
 mkdir -p $GOPATH
 rm -rf $GOROOT/bin
 
+git clone https://go.googlesource.com/go
+
+git clone go go1.4
+cd go1.4/src
+git checkout go1.4.3
+time ./make.bash
+
 cd $GOROOT/src
-# ./make.bash
+time ./make.bash
 
 go get golang.org/x/tools/cmd/cover
 go get golang.org/x/tools/cmd/godoc

@@ -49,20 +49,11 @@ go get github.com/dougm/goflymake
 go get github.com/rogpeppe/godef # github.com/zenoss/rog-go/exp/cmd/godef
 
 mkdir -p ../misc/emacs
+
+cd $GOPATH
 git clone https://github.com/dominikh/go-mode.el.git
-cd go-mode.el
-emacs -batch --eval "(let ((generated-autoload-file \"$(pwd)/go-mode-load.el\")) (update-directory-autoloads \".\"))"
-mv go-mode.el ../../misc/emacs
-mv go-mode-load.el ../../misc/emacs
-cd ..
-rm -rf go-mode.el
 
-# TODO: copy go-guru emacs to misc/emacs as well... also, update .emacs file
-
-# remove a file with syntax errors
-rm -f $GOPATH/src/github.com/zenoss/rog-go/exp/abc/audio/output.go
-
-find $GOPATH -name "*.el" -exec cp \{} $GOROOT/misc/emacs/ \;
+find $GOPATH -type f -name "*.el" -exec cp \{} $GOROOT/misc/emacs/ \;
 
 cp $GOPATH/bin/* $GOROOT/bin/
 
@@ -73,14 +64,14 @@ cat > $GOROOT/misc/emacs/.emacs <<EOF
 (set-background-color "black")
 (add-to-list 'default-frame-alist '(foreground-color . "white"))
 (add-to-list 'default-frame-alist '(background-color . "black"))
+(add-to-list 'load-path "~/go/misc/emacs")
+(require 'go-mode-autoloads)
 (setq gofmt-command "goimports")
-(add-to-list 'load-path "~/go/misc/emacs/" t)
-(require 'go-mode-load)
 (add-hook 'before-save-hook #'gofmt-before-save)
 (require 'go-flymake)
-(require 'golint)
-(require 'go-guru)
 (require 'go-rename)
+(require 'go-guru)
+(require 'golint)
 EOF
 
 unset GOOS
