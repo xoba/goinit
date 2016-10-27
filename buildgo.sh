@@ -14,6 +14,12 @@ export PATH=$GOROOT/bin:$GOPATH/bin:$PATH
 
 git clone https://go.googlesource.com/go
 
+#
+# enable larger heap size
+#
+sed -i -e 's/*39/*41/g' go/src/runtime/malloc.go
+echo "// changed 39 to 41 (bits) in this file to enable 2048 GB heap" >> go/src/runtime/malloc.go
+
 # build bootstrap go
 git clone go go1.4
 cd go1.4/src
