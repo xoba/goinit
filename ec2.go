@@ -103,7 +103,7 @@ func main() {
 	}))
 	f.Close()
 	if !dryrun {
-		r, err := AwsCli("ec2", "--profile", profile, "run-instances", "--image-id", ami, "--instance-type", "m3.xlarge", "--key-name", "golang_rsa", "--user-data", "file://"+driver)
+		r, err := AwsCli("ec2", "--profile", profile, "run-instances", "--image-id", ami, "--instance-type", "m3.large", "--key-name", "golang_rsa", "--user-data", "file://"+driver)
 		check(err)
 		log.Printf("start ec2: %v", r)
 		if len(latest) > 0 {
