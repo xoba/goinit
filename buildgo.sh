@@ -54,6 +54,7 @@ go get github.com/golang/lint/golint
 # unofficial:
 go get github.com/dougm/goflymake
 go get github.com/rogpeppe/godef # github.com/zenoss/rog-go/exp/cmd/godef
+go get github.com/mvdan/interfacer/cmd/interfacer
 
 mkdir -p ../misc/emacs
 
