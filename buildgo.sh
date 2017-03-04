@@ -42,7 +42,9 @@ go get golang.org/x/tools/cmd/cover
 go get golang.org/x/tools/cmd/godoc
 go get golang.org/x/tools/cmd/stringer
 go get golang.org/x/tools/cmd/goimports
-go get golang.org/x/tools/cmd/gotype
+# delete gotype due to deletion by https://github.com/golang/tools/commit/f5a6ee1ea9f7b3a91e3e70dc1b9706886d0e0ae3
+# "cmd/gotype: delete this command in favor of go/types/gotype.go in the std lib"
+# go get golang.org/x/tools/cmd/gotype
 go get golang.org/x/tools/cmd/gorename
 go get golang.org/x/tools/cmd/callgraph
 go get golang.org/x/tools/cmd/gomvpkg
