@@ -15,7 +15,7 @@ git clone https://go.googlesource.com/go
 git clone go go1.4
 cd go1.4/src
 git checkout go1.4.3
-time ./make.bash
+CGO_ENABLED=0 time ./make.bash
 
 cd $GOROOT/src
 time ./make.bash

@@ -42,9 +42,6 @@ go get golang.org/x/tools/cmd/cover
 go get golang.org/x/tools/cmd/godoc
 go get golang.org/x/tools/cmd/stringer
 go get golang.org/x/tools/cmd/goimports
-# delete gotype due to deletion by https://github.com/golang/tools/commit/f5a6ee1ea9f7b3a91e3e70dc1b9706886d0e0ae3
-# "cmd/gotype: delete this command in favor of go/types/gotype.go in the std lib"
-# go get golang.org/x/tools/cmd/gotype
 go get golang.org/x/tools/cmd/gorename
 go get golang.org/x/tools/cmd/callgraph
 go get golang.org/x/tools/cmd/gomvpkg
@@ -55,7 +52,7 @@ go get github.com/golang/lint/golint
 
 # unofficial:
 go get github.com/dougm/goflymake
-go get github.com/rogpeppe/godef # github.com/zenoss/rog-go/exp/cmd/godef
+go get github.com/rogpeppe/godef
 go get -u mvdan.cc/interfacer
 
 mkdir -p ../misc/emacs
@@ -63,7 +60,7 @@ mkdir -p ../misc/emacs
 cd $GOPATH
 git clone https://github.com/dominikh/go-mode.el.git
 
-find $GOPATH -type f -name "*.el" -exec cp \{} $GOROOT/misc/emacs/ \;
+cp $GOPATH/go-mode.el/*.el $GOROOT/misc/emacs/
 
 cp $GOPATH/bin/* $GOROOT/bin/
 
