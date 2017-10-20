@@ -47,6 +47,8 @@ go get golang.org/x/tools/cmd/callgraph
 go get golang.org/x/tools/cmd/gomvpkg
 go get golang.org/x/tools/cmd/guru
 
+# TODO: flymake and lint seem to be gone? at least via emacs.
+
 # semi-official:
 go get github.com/golang/lint/golint
 
@@ -80,9 +82,9 @@ cat > $GOROOT/misc/emacs/.emacs <<EOF
 (require 'go-mode-autoloads)
 (setq gofmt-command "goimports")
 (add-hook 'before-save-hook #'gofmt-before-save)
-(require 'go-flymake)
 (require 'go-rename)
 (require 'go-guru)
+(require 'go-flymake)
 (require 'golint)
 EOF
 
