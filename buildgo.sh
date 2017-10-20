@@ -60,6 +60,11 @@ mkdir -p ../misc/emacs
 cd $GOPATH
 git clone https://github.com/dominikh/go-mode.el.git
 
+# TODO: need to "build" somehow to generate go-mode-autoloads.el instead
+cd go-mode.el
+git checkout 99b06da
+cd ../
+
 cp $GOPATH/go-mode.el/*.el $GOROOT/misc/emacs/
 
 cp $GOPATH/bin/* $GOROOT/bin/
