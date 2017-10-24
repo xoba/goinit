@@ -67,7 +67,9 @@ cd go-mode.el
 git checkout 99b06da
 cd ../
 
-cp $GOPATH/go-mode.el/*.el $GOROOT/misc/emacs/
+# try out a better way to gather all emacs files:
+find $GOPATH -name "*.el" -exec cp \{} $GOROOT/misc/emacs/ \;
+# cp $GOPATH/go-mode.el/*.el $GOROOT/misc/emacs/
 
 cp $GOPATH/bin/* $GOROOT/bin/
 
