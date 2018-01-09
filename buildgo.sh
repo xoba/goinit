@@ -74,6 +74,7 @@ find $GOPATH -name "*.el" -exec cp \{} $GOROOT/misc/emacs/ \;
 cp $GOPATH/bin/* $GOROOT/bin/
 
 cat > $GOROOT/misc/emacs/.emacs <<EOF
+(setq ring-bell-function 'ignore)
 (set-face-attribute 'default nil :height 110)
 (set-cursor-color "white") 
 (set-foreground-color "white")
