@@ -30,18 +30,18 @@ export GOPATH=$TMP/gopath
 export PATH=$GOROOT/bin:$GOPATH/bin:$PATH
 go version
 
-go get -v golang.org/x/tools/cmd/cover
-go get -v golang.org/x/tools/cmd/godoc
-go get -v golang.org/x/tools/cmd/stringer
-go get -v golang.org/x/tools/cmd/goimports
-go get -v golang.org/x/tools/cmd/gorename
-go get -v golang.org/x/tools/cmd/callgraph
-go get -v golang.org/x/tools/cmd/gomvpkg
-go get -v golang.org/x/tools/cmd/guru
-go get -v github.com/golang/lint/golint
-go get -v github.com/dougm/goflymake
-go get -v github.com/rogpeppe/godef
-go get -u -v mvdan.cc/interfacer
+go get golang.org/x/tools/cmd/cover
+go get golang.org/x/tools/cmd/godoc
+go get golang.org/x/tools/cmd/stringer
+go get golang.org/x/tools/cmd/goimports
+go get golang.org/x/tools/cmd/gorename
+go get golang.org/x/tools/cmd/callgraph
+go get golang.org/x/tools/cmd/gomvpkg
+go get golang.org/x/tools/cmd/guru
+go get github.com/golang/lint/golint
+go get github.com/dougm/goflymake
+go get github.com/rogpeppe/godef
+go get -u mvdan.cc/interfacer
 
 cd $GOPATH
 
@@ -49,7 +49,8 @@ git clone https://github.com/dominikh/go-mode.el.git
 cd go-mode.el
 git checkout 99b06da
 
-mv $GOPATH/go-mode.el $GOROOT/misc/emacs
+mkdir $GOROOT/misc/emacs
+find $GOPATH -name "*.el" -exec cp \{} $GOROOT/misc/emacs \;
 
 cp $GOPATH/bin/* $GOROOT/bin/
 
