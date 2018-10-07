@@ -13,8 +13,8 @@ else
   export TAR="go1.11.1.darwin-amd64.tar.gz"
 fi
 
-#curl https://dl.google.com/go/$TAR -o go.tar.gz
-cp ~/goinit/go.tar.gz .
+curl https://dl.google.com/go/$TAR -o go.tar.gz
+#cp ~/goinit/go.tar.gz .
 
 tar xf go.tar.gz
 rm go.tar.gz
