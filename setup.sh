@@ -1,11 +1,10 @@
-#!/bin/bash
+#!/bin/bash -e
 #
 # builds and installs a nice go language environment for emacs etc.
 #
 
 export TMP=`mktemp -d`
 echo "working in: $TMP"
-cd $TMP
 
 if [[ `uname` == 'Linux' ]]; then
   export TAR="go1.11.1.linux-amd64.tar.gz"
@@ -13,11 +12,18 @@ else
   export TAR="go1.11.1.darwin-amd64.tar.gz"
 fi
 
-curl https://dl.google.com/go/$TAR -o go.tar.gz
-#cp ~/goinit/go.tar.gz .
+if [ ! -e $TAR ]
+then
+   export TMPTAR=`mktemp`    
+   curl https://dl.google.com/go/$TAR -o $TMPTAR
+   mv $TMPTAR $TAR
+fi
 
-tar xf go.tar.gz
-rm go.tar.gz
+cp $TAR $TMP
+
+cd $TMP
+
+tar xf $TAR
 export GOROOT=$TMP/go
 mkdir gopath
 export GOPATH=$TMP/gopath
@@ -35,7 +41,7 @@ go get -v golang.org/x/tools/cmd/guru
 go get -v github.com/golang/lint/golint
 go get -v github.com/dougm/goflymake
 go get -v github.com/rogpeppe/godef
-go get -uv mvdan.cc/interfacer
+go get -u -v mvdan.cc/interfacer
 
 cd $GOPATH
 
