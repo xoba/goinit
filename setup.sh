@@ -73,6 +73,9 @@ cat > $GOROOT/misc/emacs/.emacs <<EOF
 EOF
 
 echo "copy and paste the following into terminal to install:"
-echo "mv ~/go `mktemp -d`"
+if [ -e ~/go ]
+then
+    echo "mv ~/go `mktemp -d`"
+fi
 echo "mv $TMP/go ~/go"
 
