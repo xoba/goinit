@@ -3,5 +3,17 @@ versions of downloadable go, not custom builds.
 
 for automated setup, you could try:
 
-   `curl https://raw.githubusercontent.com/xoba/goinit/master/setup.sh | bash`
+```
+curl https://raw.githubusercontent.com/xoba/goinit/master/setup.sh | bash
+```
+
+then follow instructions on copying and pasting commands into your terminal.
+
+the minimal'ish set of environment variables would be:
+
+```
+export GOROOT=~/go
+export PATH=$GOROOT/bin:$PATH
+```
+
 
