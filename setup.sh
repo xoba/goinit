@@ -28,7 +28,7 @@ export GOROOT=$TMP/go
 mkdir gopath
 export GOPATH=$TMP/gopath
 export PATH=$GOROOT/bin:$GOPATH/bin:$PATH
-go version
+echo "using: `go version`"
 
 go get golang.org/x/tools/cmd/cover
 go get golang.org/x/tools/cmd/godoc
@@ -45,12 +45,12 @@ go get -u mvdan.cc/interfacer
 
 cd $GOPATH
 
-git clone https://github.com/dominikh/go-mode.el.git
+git clone --quiet https://github.com/dominikh/go-mode.el.git
 cd go-mode.el
-git checkout 99b06da
+git checkout --quiet 99b06da
 
 mkdir $GOROOT/misc/emacs
-find $GOPATH -name "*.el" -exec cp \{} $GOROOT/misc/emacs \;
+find $GOPATH -type f -name "*.el" -exec cp \{} $GOROOT/misc/emacs \;
 
 cp $GOPATH/bin/* $GOROOT/bin/
 
