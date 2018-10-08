@@ -1,3 +1,0 @@
-[submodule "go"]
-	path = go
-	url = https://go.googlesource.com/go
