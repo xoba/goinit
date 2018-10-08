@@ -7,6 +7,7 @@ curl https://raw.githubusercontent.com/xoba/goinit/master/setup.sh | bash
 ```
 
 then follow instructions on copying and pasting commands into your terminal.
+this shoud work on typical linux or mac systems.
 
 the minimal'ish set of environment variables would be:
 
