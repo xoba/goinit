@@ -7,9 +7,9 @@ export TMP=`mktemp -d`
 echo "working in: $TMP"
 
 if [[ `uname` == 'Linux' ]]; then
-  export TAR="go1.11.1.linux-amd64.tar.gz"
+  export TAR="go1.11.2.linux-amd64.tar.gz"
 else
-  export TAR="go1.11.1.darwin-amd64.tar.gz"
+  export TAR="go1.11.2.darwin-amd64.tar.gz"
 fi
 
 if [ ! -e $TAR ]
