@@ -7,9 +7,11 @@ export TMP=`mktemp -d`
 echo "working in: $TMP"
 
 if [[ `uname` == 'Linux' ]]; then
-  export TAR="go1.11.2.linux-amd64.tar.gz"
+    export TAR="go1.11.2.linux-amd64.tar.gz"
+    export SHA256="1dfe664fa3d8ad714bbd15a36627992effd150ddabd7523931f077b3926d736d"
 else
-  export TAR="go1.11.2.darwin-amd64.tar.gz"
+    export TAR="go1.11.2.darwin-amd64.tar.gz"
+    export SHA256="be2a9382ef85792280951a78e789e8891ddb1df4ac718cd241ea9d977c85c683"
 fi
 
 if [ ! -e $TAR ]
@@ -17,6 +19,14 @@ then
    export TMPTAR=`mktemp`    
    curl https://dl.google.com/go/$TAR -o $TMPTAR
    mv $TMPTAR $TAR
+fi
+
+export COMPUTED=`openssl dgst -binary -sha256 $TAR | hexdump -ve '1/1 "%.2x"'`
+
+if [ "$SHA256" != "$COMPUTED" ]
+then
+    echo "bad sha256"
+    exit
 fi
 
 cp $TAR $TMP
