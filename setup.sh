@@ -3,17 +3,17 @@
 # builds and installs a nice go language environment for emacs etc.
 #
 
-export VERSION="go1.11.4"
+export VERSION="go1.12beta1"
 
 export TMP=`mktemp -d`
 echo "working in: $TMP"
 
 if [[ `uname` == 'Linux' ]]; then
     export TAR="$VERSION.linux-amd64.tar.gz"
-    export SHA256="fb26c30e6a04ad937bbc657a1b5bba92f80096af1e8ee6da6430c045a8db3a5b"
+    export SHA256="65bfd4a99925f1f85d712f4c1109977aa24ee4c6e198162bf8e819fdde19e875"
 else
     export TAR="$VERSION.darwin-amd64.tar.gz"
-    export SHA256="48ea987fb610894b3108ecf42e7a4fd1c1e3eabcaeb570e388c75af1f1375f80"
+    export SHA256="e49bf83ae10b2232d2efa918f0e9df1d76f93a0c6b0ea18c11edd9ef9defa505"
 fi
 
 if [ ! -e $TAR ]
@@ -50,7 +50,7 @@ go get golang.org/x/tools/cmd/gorename
 go get golang.org/x/tools/cmd/callgraph
 go get golang.org/x/tools/cmd/gomvpkg
 go get golang.org/x/tools/cmd/guru
-go get github.com/golang/lint/golint
+go get golang.org/x/lint/golint
 go get github.com/dougm/goflymake
 go get github.com/rogpeppe/godef
 go get -u mvdan.cc/interfacer
