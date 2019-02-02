@@ -23,7 +23,7 @@ then
    mv $TMPTAR $TAR
 fi
 
-export COMPUTED=`cat $TAR | openssl dgst -sha256`
+export COMPUTED=`openssl dgst -sha256 $TAR | awk '{ print $NF }'`
 
 if [ "$SHA256" != "$COMPUTED" ]
 then
