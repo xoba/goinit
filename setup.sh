@@ -27,7 +27,7 @@ export COMPUTED=`cat $TAR | openssl dgst -sha256`
 
 if [ "$SHA256" != "$COMPUTED" ]
 then
-    echo "bad sha256"
+    echo "bad sha256; got $COMPUTED, expected $SHA256"
     exit
 fi
 
