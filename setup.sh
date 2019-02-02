@@ -23,7 +23,7 @@ then
    mv $TMPTAR $TAR
 fi
 
-export COMPUTED=`openssl dgst -binary -sha256 $TAR | hexdump -ve '1/1 "%.2x"'`
+export COMPUTED=`cat $TAR | openssl dgst -sha256`
 
 if [ "$SHA256" != "$COMPUTED" ]
 then
