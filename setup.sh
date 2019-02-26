@@ -3,17 +3,17 @@
 # builds and installs a nice go language environment for emacs etc.
 #
 
-export VERSION="go1.12rc1"
+export VERSION="go1.12"
 
 export TMP=`mktemp -d`
 echo "working in: $TMP"
 
 if [[ `uname` == 'Linux' ]]; then
     export TAR="$VERSION.linux-amd64.tar.gz"
-    export SHA256="e5a03e1f2e065b17b2fbbd3429f18a6f51fe2848e0120586652b9f14ada72c9a"
+    export SHA256="750a07fef8579ae4839458701f4df690e0b20b8bcce33b437e4df89c451b6f13"
 else
     export TAR="$VERSION.darwin-amd64.tar.gz"
-    export SHA256="a5d5f0a5bec8edde1c80dba0fe84eaf3eb7b515d6ae52982150c583ce498aa97"
+    export SHA256="6c7e07349403f71588ef4e93a6d4ae31f8e5de1497a0a42fd998fe9b6bd07c8e"
 fi
 
 if [ ! -e $TAR ]
