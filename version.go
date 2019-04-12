@@ -49,7 +49,7 @@ func main() {
 			return
 		}
 		if version == "" {
-			p := regexp.MustCompile(`go(\d+\.\d+\.\d+)\..+`)
+			p := regexp.MustCompile(`(go\d+\.\d+\.\d+)\..+`)
 			if p.MatchString(name) {
 				version = p.FindStringSubmatch(name)[1]
 			}
