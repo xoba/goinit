@@ -3,31 +3,43 @@
 # builds and installs a nice go language environment for emacs etc.
 #
 
-export VERSION=`cat version.txt`
+./fetch.sh
 
-export TMP=`mktemp -d`
+VERSION=`cat version.txt`
+
+TMP=`mktemp -d`
 echo "working in: $TMP"
 
-if [[ `uname` == 'Linux' ]]; then
-    export TAR="$VERSION.linux-amd64.tar.gz"
-    export SHA256=`cat linux.txt`
-else
-    export TAR="$VERSION.darwin-amd64.tar.gz"
-    export SHA256=`cat darwin.txt`
-fi
+PLATFORM=`uname`
+
+case $PLATFORM in
+    'Linux')
+	SHA=`cat linux_sha.txt`
+	TAR=`cat linux_tar.txt`
+	HREF=`cat linux_href.txt`
+	;;
+    'Darwin')
+	SHA=`cat darwin_sha.txt`
+	TAR=`cat darwin_tar.txt`
+	HREF=`cat darwin_href.txt`
+	;;
+    *)
+	echo "unsupported platform: $PLATFORM"; exit 1; 
+	;;
+esac
 
 if [ ! -e $TAR ]
 then
-   export TMPTAR=`mktemp`    
-   curl https://dl.google.com/go/$TAR -o $TMPTAR
+   TMPTAR=`mktemp`    
+   curl $HREF -o $TMPTAR
    mv $TMPTAR $TAR
 fi
 
-export COMPUTED=`openssl dgst -sha256 $TAR | awk '{ print $NF }'`
+COMPUTED=`openssl dgst -sha256 $TAR | awk '{ print $NF }'`
 
-if [ "$SHA256" != "$COMPUTED" ]
+if [ "$SHA" != "$COMPUTED" ]
 then
-    echo "bad sha256; got $COMPUTED, expected $SHA256"
+    echo "bad sha256; got $COMPUTED, expected $SHA"
     exit
 fi
 
@@ -36,10 +48,10 @@ cp $TAR $TMP
 cd $TMP
 
 tar xf $TAR
-export GOROOT=$TMP/go
+GOROOT=$TMP/go
 mkdir gopath
-export GOPATH=$TMP/gopath
-export PATH=$GOROOT/bin:$GOPATH/bin:$PATH
+GOPATH=$TMP/gopath
+PATH=$GOROOT/bin:$GOPATH/bin:$PATH
 echo "using: `go version`"
 
 go get golang.org/x/tools/cmd/cover
