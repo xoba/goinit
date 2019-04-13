@@ -1,3 +1,4 @@
+// tries to get latest version and sha256 hashes from golang website
 package main
 
 import (
@@ -37,11 +38,6 @@ func main() {
 				sha = text
 			}
 		})
-		if false {
-			fmt.Printf("%d. name=%q, type=%q, os=%q, arch=%q, sha256=%s, href=%s\n",
-				i, name, typ, os, arch, sha, href,
-			)
-		}
 		if typ != "Archive" {
 			return
 		}
@@ -72,7 +68,7 @@ func main() {
 
 func write(name, value string) error {
 	value = strings.TrimSpace(value)
-	fmt.Printf("%q = %q\n", name, value)
+	fmt.Printf("%s = %q\n", name, value)
 	return ioutil.WriteFile(name+".txt", []byte(value+"\n"), os.ModePerm)
 }
 
