@@ -30,7 +30,7 @@ alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs"
 
 no idea how to automate this for non-unix operating systems.
 
-run `fetch.sh` to update our impression of which version of go to focus on.
+run `fetch.sh` to update our impression of which version of go to focus on:
 ```
 goinit$ ./fetch.sh -help
 Usage of bin/fetch:
