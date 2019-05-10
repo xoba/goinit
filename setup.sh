@@ -3,7 +3,8 @@
 # builds and installs a nice go language environment for emacs etc.
 #
 
-./fetch.sh
+unset GOPATH
+unset GOROOT
 
 VERSION=`cat version.txt`
 
@@ -44,14 +45,13 @@ then
 fi
 
 cp $TAR $TMP
-
 cd $TMP
-
 tar xf $TAR
-GOROOT=$TMP/go
-mkdir gopath
-GOPATH=$TMP/gopath
-PATH=$GOROOT/bin:$GOPATH/bin:$PATH
+
+export GOROOT=$TMP/go
+export GOPATH=$TMP/gopath
+mkdir -p $GOPATH
+export PATH=$GOROOT/bin:$GOPATH/bin:$PATH
 echo "using: `go version`"
 
 go get golang.org/x/tools/cmd/cover
