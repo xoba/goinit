@@ -3,7 +3,9 @@ official versions of downloadable go, not custom builds like i used to
 do. for automated setup on linux or darwin, you could try:
 
 ```
-curl https://raw.githubusercontent.com/xoba/goinit/master/setup.sh | bash
+git clone git@github.com:xoba/goinit.git
+cd goinit
+./setup.sh
 ```
 
 then follow instructions on copying and pasting commands into your
