@@ -6,7 +6,7 @@
 unset GOPATH
 unset GOROOT
 
-VERSION=`cat version.txt`
+VERSION=`cat versions/version.txt`
 
 TMP=`mktemp -d`
 echo "working in: $TMP"
@@ -15,14 +15,14 @@ PLATFORM=`uname`
 
 case $PLATFORM in
     'Linux')
-	SHA=`cat linux_sha.txt`
-	TAR=`cat linux_tar.txt`
-	HREF=`cat linux_href.txt`
+	SHA=`cat versions/linux_sha.txt`
+	TAR=`cat versions/linux_tar.txt`
+	HREF=`cat versions/linux_href.txt`
 	;;
     'Darwin')
-	SHA=`cat darwin_sha.txt`
-	TAR=`cat darwin_tar.txt`
-	HREF=`cat darwin_href.txt`
+	SHA=`cat versions/darwin_sha.txt`
+	TAR=`cat versions/darwin_tar.txt`
+	HREF=`cat versions/darwin_href.txt`
 	;;
     *)
 	echo "unsupported platform: $PLATFORM"; exit 1; 
