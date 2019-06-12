@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"path/filepath"
 	"regexp"
 	"strings"
 
@@ -93,7 +94,10 @@ func write(name string, value interface{}) error {
 		if verbose {
 			fmt.Printf("%s = %q\n", name, value)
 		}
-		return ioutil.WriteFile(name+".txt", []byte(value+"\n"), os.ModePerm)
+		if err := os.MkdirAll("versions", os.ModePerm); err != nil {
+			return err
+		}
+		return ioutil.WriteFile(filepath.Join("versions", name+".txt"), []byte(value+"\n"), os.ModePerm)
 	case *Download:
 		sub := func(k, v string) error {
 			return write(name+"_"+k, v)
