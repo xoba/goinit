@@ -54,6 +54,7 @@ mkdir -p $GOPATH
 export PATH=$GOROOT/bin:$GOPATH/bin:$PATH
 echo "using: `go version`"
 
+go get golang.org/x/tools/gopls
 go get golang.org/x/tools/cmd/cover
 go get golang.org/x/tools/cmd/godoc
 go get golang.org/x/tools/cmd/stringer
