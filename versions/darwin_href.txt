@@ -1,1 +1,1 @@
-https://dl.google.com/go/go1.15beta1.darwin-amd64.tar.gz
+/dl/go1.14.5.darwin-amd64.tar.gz
