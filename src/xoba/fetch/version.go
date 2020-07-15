@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"io/ioutil"
+	"net/url"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -27,7 +28,9 @@ func init() {
 }
 
 func main() {
-	doc, err := goquery.NewDocument("https://golang.org/dl/")
+	base, err := url.Parse("https://golang.org/dl/")
+	check(err)
+	doc, err := goquery.NewDocument(base.String())
 	check(err)
 	var darwin, linux *Download
 	var version string
@@ -35,8 +38,10 @@ func main() {
 		var name, href, typ, os, arch, sha string
 		s.Find("a").Each(func(i int, s *goquery.Selection) {
 			v, ok := s.Attr("href")
+			r, err := url.Parse(v)
+			check(err)
 			if ok {
-				href = v
+				href = base.ResolveReference(r).String()
 			}
 		})
 		s.Find("td").Each(func(i int, s *goquery.Selection) {

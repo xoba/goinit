@@ -31,9 +31,9 @@ esac
 
 if [ ! -e $TAR ]
 then
-   TMPTAR=`mktemp`    
-   curl $HREF -o $TMPTAR
-   mv $TMPTAR $TAR
+    TMPTAR=`mktemp`
+    curl -L -o $TMPTAR $HREF
+    mv $TMPTAR $TAR
 fi
 
 COMPUTED=`openssl dgst -sha256 $TAR | awk '{ print $NF }'`
@@ -41,6 +41,7 @@ COMPUTED=`openssl dgst -sha256 $TAR | awk '{ print $NF }'`
 if [ "$SHA" != "$COMPUTED" ]
 then
     echo "bad sha256; got $COMPUTED, expected $SHA"
+    rm -f $TAR
     exit
 fi
 
