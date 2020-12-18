@@ -6,8 +6,6 @@
 unset GOPATH
 unset GOROOT
 
-VERSION=`cat versions/version.txt`
-
 TMP=`mktemp -d`
 echo "working in: $TMP"
 

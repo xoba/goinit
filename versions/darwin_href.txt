@@ -1,1 +1,1 @@
-https://golang.org/dl/go1.15.6.darwin-amd64.tar.gz
+https://golang.org/dl/go1.16beta1.darwin-amd64.tar.gz
