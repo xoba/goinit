@@ -53,19 +53,19 @@ mkdir -p $GOPATH
 export PATH=$GOROOT/bin:$GOPATH/bin:$PATH
 echo "using: `go version`"
 
-go get golang.org/x/tools/gopls
-go get golang.org/x/tools/cmd/cover
-go get golang.org/x/tools/cmd/godoc
-go get golang.org/x/tools/cmd/stringer
-go get golang.org/x/tools/cmd/goimports
-go get golang.org/x/tools/cmd/gorename
-go get golang.org/x/tools/cmd/callgraph
-go get golang.org/x/tools/cmd/gomvpkg
-go get golang.org/x/tools/cmd/guru
-go get golang.org/x/lint/golint
-go get github.com/dougm/goflymake
-go get github.com/rogpeppe/godef
-go get -u mvdan.cc/interfacer
+go install golang.org/x/tools/gopls@latest
+go install golang.org/x/tools/cmd/cover@latest
+go install golang.org/x/tools/cmd/godoc@latest
+go install golang.org/x/tools/cmd/stringer@latest
+go install golang.org/x/tools/cmd/goimports@latest
+go install golang.org/x/tools/cmd/gorename@latest
+go install golang.org/x/tools/cmd/callgraph@latest
+go install golang.org/x/tools/cmd/gomvpkg@latest
+go install golang.org/x/tools/cmd/guru@latest
+go install golang.org/x/lint/golint@latest
+go install github.com/dougm/goflymake@latest
+go install github.com/rogpeppe/godef@latest
+go install mvdan.cc/interfacer@latest
 
 cd $GOPATH
 

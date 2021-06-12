@@ -1,1 +1,1 @@
-go1.16.5.darwin-amd64.tar.gz
+go1.17beta1.darwin-amd64.tar.gz
