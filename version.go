@@ -34,7 +34,7 @@ func main() {
 	check(err)
 	var darwin, linux *Download
 	var version string
-	doc.Find("table.codetable tr").Each(func(i int, s *goquery.Selection) {
+	doc.Find("table.downloadtable tr").Each(func(i int, s *goquery.Selection) {
 		var name, href, typ, os, arch, sha string
 		s.Find("a").Each(func(i int, s *goquery.Selection) {
 			v, ok := s.Attr("href")
