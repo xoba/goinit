@@ -1,1 +1,1 @@
-https://golang.org/dl/go1.17.5.linux-amd64.tar.gz
+https://golang.org/dl/go1.17.6.linux-amd64.tar.gz
