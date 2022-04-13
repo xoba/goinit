@@ -9,18 +9,23 @@ unset GOROOT
 TMP=`mktemp -d`
 echo "working in: $TMP"
 
-PLATFORM=`uname`
+PLATFORM="`uname`_`uname -p`"
 
 case $PLATFORM in
-    'Linux')
-	SHA=`cat versions/linux_sha.txt`
-	TAR=`cat versions/linux_tar.txt`
-	HREF=`cat versions/linux_href.txt`
+    'Linux_x86_64')
+	SHA=`cat versions/linux_x86_64_sha.txt`
+	TAR=`cat versions/linux_x86_64_tar.txt`
+	HREF=`cat versions/linux_x86_64_href.txt`
 	;;
-    'Darwin')
-	SHA=`cat versions/darwin_sha.txt`
-	TAR=`cat versions/darwin_tar.txt`
-	HREF=`cat versions/darwin_href.txt`
+    'Darwin_i386')
+	SHA=`cat versions/darwin_i386.sha.txt`
+	TAR=`cat versions/darwin_i386.tar.txt`
+	HREF=`cat versions/darwin_i386.href.txt`
+	;;
+    'Darwin_arm')
+	SHA=`cat versions/darwin_arm.sha.txt`
+	TAR=`cat versions/darwin_arm.tar.txt`
+	HREF=`cat versions/darwin_arm.href.txt`
 	;;
     *)
 	echo "unsupported platform: $PLATFORM"; exit 1; 

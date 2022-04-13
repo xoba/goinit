@@ -20,6 +20,7 @@ import (
 type Download struct {
 	Version  string
 	Platform string
+	Arch     string
 	Tar      string
 	Href     string
 	Sha256   string
@@ -33,7 +34,7 @@ func (d Download) String() string {
 var verbose bool
 
 func init() {
-	flag.BoolVar(&verbose, "v", false, "whether to be verbose or not")
+	flag.BoolVar(&verbose, "v", true, "whether to be verbose or not")
 	flag.Parse()
 }
 
@@ -71,14 +72,12 @@ func main() {
 		if typ != "Archive" {
 			return
 		}
-		if arch != "x86-64" {
-			return
-		}
 		d := &Download{
 			Tar:      name,
 			Href:     href,
 			Sha256:   sha,
 			Platform: os,
+			Arch:     arch,
 		}
 		p := regexp.MustCompile(`(go\d+\.\d+(\.\d+)?)\..+`)
 		if p.MatchString(name) {
@@ -103,12 +102,20 @@ func main() {
 		}
 		return nil
 	}
-	check(write("darwin", first(func(d *Download) bool {
-		return d.Platform == "macOS"
+	check(write("darwin_i386", first(func(d *Download) bool {
+		return d.Platform == "macOS" && d.Arch == "x86-64"
 	})))
-	check(write("linux", first(func(d *Download) bool {
-		return d.Platform == "Linux"
+	check(write("darwin_arm", first(func(d *Download) bool {
+		return d.Platform == "macOS" && d.Arch == "ARM64"
 	})))
+	check(write("linux_x86_64", first(func(d *Download) bool {
+		return d.Platform == "Linux" && d.Arch == "x86-64"
+	})))
+	return
+
+	for _, d := range downloads {
+		fmt.Println(d)
+	}
 }
 
 func write(name string, value interface{}) error {
