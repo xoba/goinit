@@ -11,6 +11,8 @@ echo "working in: $TMP"
 
 PLATFORM="`uname`_`uname -p`"
 
+echo "platform: $PLATFORM"
+
 case $PLATFORM in
     'Linux_x86_64')
 	SHA=`cat versions/linux_x86_64_sha.txt`
@@ -18,14 +20,14 @@ case $PLATFORM in
 	HREF=`cat versions/linux_x86_64_href.txt`
 	;;
     'Darwin_i386')
-	SHA=`cat versions/darwin_i386.sha.txt`
-	TAR=`cat versions/darwin_i386.tar.txt`
-	HREF=`cat versions/darwin_i386.href.txt`
+	SHA=`cat versions/darwin_i386_sha.txt`
+	TAR=`cat versions/darwin_i386_tar.txt`
+	HREF=`cat versions/darwin_i386_href.txt`
 	;;
     'Darwin_arm')
-	SHA=`cat versions/darwin_arm.sha.txt`
-	TAR=`cat versions/darwin_arm.tar.txt`
-	HREF=`cat versions/darwin_arm.href.txt`
+	SHA=`cat versions/darwin_arm_sha.txt`
+	TAR=`cat versions/darwin_arm_tar.txt`
+	HREF=`cat versions/darwin_arm_href.txt`
 	;;
     *)
 	echo "unsupported platform: $PLATFORM"; exit 1; 
