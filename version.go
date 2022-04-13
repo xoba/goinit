@@ -2,6 +2,7 @@
 package main
 
 import (
+	"encoding/json"
 	"flag"
 	"fmt"
 	"io/ioutil"
@@ -9,15 +10,24 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
+	"sort"
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
+	"golang.org/x/mod/semver"
 )
 
 type Download struct {
-	Tar    string
-	Href   string
-	Sha256 string
+	Version  string
+	Platform string
+	Tar      string
+	Href     string
+	Sha256   string
+}
+
+func (d Download) String() string {
+	buf, _ := json.Marshal(d)
+	return string(buf)
 }
 
 var verbose bool
@@ -32,8 +42,7 @@ func main() {
 	check(err)
 	doc, err := goquery.NewDocument(base.String())
 	check(err)
-	var darwin, linux *Download
-	var version string
+	var downloads []*Download
 	doc.Find("table.downloadtable tr").Each(func(i int, s *goquery.Selection) {
 		var name, href, typ, os, arch, sha string
 		s.Find("a").Each(func(i int, s *goquery.Selection) {
@@ -65,31 +74,41 @@ func main() {
 		if arch != "x86-64" {
 			return
 		}
-		if version == "" {
-			p := regexp.MustCompile(`(go\d+\.\d+\.\d+)\..+`)
-			if p.MatchString(name) {
-				version = p.FindStringSubmatch(name)[1]
-			}
-		}
 		d := &Download{
-			Tar:    name,
-			Href:   href,
-			Sha256: sha,
+			Tar:      name,
+			Href:     href,
+			Sha256:   sha,
+			Platform: os,
 		}
-		switch os {
-		case "macOS":
-			if darwin == nil {
-				darwin = d
+		p := regexp.MustCompile(`(go\d+\.\d+(\.\d+)?)\..+`)
+		if p.MatchString(name) {
+			v := p.FindStringSubmatch(name)[1]
+			d.Version = "v" + v[2:]
+			if !semver.IsValid(d.Version) {
+				panic(d.Version)
 			}
-		case "Linux":
-			if linux == nil {
-				linux = d
-			}
+		}
+		if d.Version != "" {
+			downloads = append(downloads, d)
 		}
 	})
-	check(write("version", version))
-	check(write("darwin", darwin))
-	check(write("linux", linux))
+	sort.Slice(downloads, func(i, j int) bool {
+		return semver.Compare(downloads[i].Version, downloads[j].Version) == +1
+	})
+	first := func(f func(*Download) bool) *Download {
+		for _, d := range downloads {
+			if f(d) {
+				return d
+			}
+		}
+		return nil
+	}
+	check(write("darwin", first(func(d *Download) bool {
+		return d.Platform == "macOS"
+	})))
+	check(write("linux", first(func(d *Download) bool {
+		return d.Platform == "Linux"
+	})))
 }
 
 func write(name string, value interface{}) error {
