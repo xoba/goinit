@@ -111,6 +111,9 @@ func main() {
 	check(write("linux_x86_64", first(func(d *Download) bool {
 		return d.Platform == "Linux" && d.Arch == "x86-64"
 	})))
+	check(write("linux_arm", first(func(d *Download) bool {
+		return d.Platform == "Linux" && d.Arch == "ARM64"
+	})))
 	return
 
 	for _, d := range downloads {

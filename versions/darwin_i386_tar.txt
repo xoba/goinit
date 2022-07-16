@@ -1,1 +1,1 @@
-go1.19rc1.darwin-amd64.tar.gz
+go1.18.4.darwin-amd64.tar.gz
