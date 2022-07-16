@@ -14,6 +14,11 @@ PLATFORM="`uname`_`uname -p`"
 echo "platform: $PLATFORM"
 
 case $PLATFORM in
+    'Linux_aarch64')
+	SHA=`cat versions/linux_arm_sha.txt`
+	TAR=`cat versions/linux_arm_tar.txt`
+	HREF=`cat versions/linux_arm_href.txt`
+	;;
     'Linux_x86_64')
 	SHA=`cat versions/linux_x86_64_sha.txt`
 	TAR=`cat versions/linux_x86_64_tar.txt`
