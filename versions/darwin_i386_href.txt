@@ -1,1 +1,1 @@
-https://golang.org/dl/go1.19.2.darwin-amd64.tar.gz
+https://golang.org/dl/go1.19.3.darwin-amd64.tar.gz
