@@ -1,1 +1,1 @@
-go1.19.4.linux-amd64.tar.gz
+go1.20rc3.linux-amd64.tar.gz
