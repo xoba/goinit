@@ -1,2 +1,2 @@
-go1.20rc2.darwin-amd64.tar.gz
+go1.20rc3.darwin-amd64.tar.gz
 
