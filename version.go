@@ -48,9 +48,9 @@ func main() {
 		var name, href, typ, os, arch, sha string
 		s.Find("a").Each(func(i int, s *goquery.Selection) {
 			v, ok := s.Attr("href")
-			r, err := url.Parse(v)
-			check(err)
 			if ok {
+				r, err := url.Parse(v)
+				check(err)
 				href = base.ResolveReference(r).String()
 			}
 		})
