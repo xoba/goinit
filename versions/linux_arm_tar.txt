@@ -1,1 +1,1 @@
-go1.20.3.linux-arm64.tar.gz
+go1.20.4.linux-arm64.tar.gz
