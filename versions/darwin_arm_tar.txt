@@ -1,1 +1,1 @@
-go1.20.4.darwin-arm64.tar.gz
+go1.20.5.darwin-arm64.tar.gz
