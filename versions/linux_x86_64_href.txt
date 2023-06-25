@@ -1,1 +1,1 @@
-https://golang.org/dl/go121rc2.linux-amd64.tar.gz
+https://golang.org/dl/go1.21rc2.linux-amd64.tar.gz
